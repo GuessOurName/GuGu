@@ -1,0 +1,15 @@
+{
+    "UserID": "132",
+    "UserName": "cb",
+    "UserAvatar": "/avatar/132.png",
+    "UserInfo": {
+        "age": "22",
+        "city": "Ningbo"
+    },
+    "Friends": [
+        {
+            "UserID": "122",
+            "Tag": "1"
+        }
+    ]
+}

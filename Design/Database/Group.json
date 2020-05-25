@@ -1,0 +1,20 @@
+{
+    "GroupID": "123",
+    "GroupName": "hello",
+    "GroupAvatar": "/groups/avatar/123.png",
+    "GroupInfo": "hello",
+    "GroupFiles": [
+        "/groups/files/123/hello.txt"
+    ],
+    "Announcement": "群公告",
+    "GroupMembers": [
+        "123",
+        "456"
+    ],
+    "GroupAdmis": [
+        "123"
+    ],
+    "GroupBoss": [
+        "456"
+    ]
+}

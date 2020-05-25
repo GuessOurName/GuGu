@@ -1,15 +1,29 @@
-{
-    "UserID": "132",
-    "UserName": "cb",
-    "UserAvatar": "/avatar/132.png",
-    "UserInfo": {
-        "age": "22",
-        "city": "Ningbo"
-    },
-    "Friends": [
-        {
-            "UserID": "122",
-            "Tag": "1"
-        }
-    ]
-}
+[
+    {
+        "UserID": "132",
+        "UserName": "cb",
+        "UserAvatar": "/users/avatar/132.png",
+        "UserInfo": {
+            "age": "22",
+            "city": "Ningbo"
+        },
+        "FriendsTags": [
+            {
+                "TagName": "同学",
+                "FriendsIDList": [
+                    "122",
+                    "123"
+                ]
+            }
+        ],
+        "GroupsTags": [
+            {
+                "TagName": "同学群",
+                "GroupsIDList": [
+                    "123",
+                    "456"
+                ]
+            }
+        ]
+    }
+]

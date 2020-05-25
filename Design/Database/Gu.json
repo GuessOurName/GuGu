@@ -1,0 +1,19 @@
+{
+    "Time": "20200525145700",
+    "UserID": "132",
+    "Content": [
+        "/Gu/132/2020.txt",
+        "/Gu/132/2020.png"
+    ],
+    "Star": "123",
+    "Comment": [
+        {
+            "UserID": "133",
+            "Content": "666"
+        }
+    ],
+    "Authority": {
+        "Type": 1,
+        "List": []
+    }
+}

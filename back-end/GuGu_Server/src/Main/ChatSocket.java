@@ -36,6 +36,7 @@ public class ChatSocket extends Thread{
     @Override
     public void run() {
         try {
+            // 读取Socket内容
             String line = null;
             System.out.println("receive success");
             while ((line = bufferedReader.readLine()) != null) {
@@ -54,6 +55,7 @@ public class ChatSocket extends Thread{
             e.printStackTrace();
         } finally {
             try {
+                // 用户离线
                 MainWindow.getMainWindow().setShowMsg(this.username + " login out !");
                 MainWindow.getMainWindow().removeOfflineUsers(this.username);
                 ChatManager.getChatManager().remove(socketMsg);

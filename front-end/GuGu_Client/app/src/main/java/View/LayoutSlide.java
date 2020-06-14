@@ -34,19 +34,19 @@ public class LayoutSlide extends FrameLayout {
     public LayoutSlide(@NonNull Context context) {
         super(context);
         this.context = context;
-        initViews();
+//        initViews();
     }
 
     public LayoutSlide(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        initViews();
+//        initViews();
     }
 
     public LayoutSlide(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
-        initViews();
+//        initViews();
     }
 
     private void initViews() {

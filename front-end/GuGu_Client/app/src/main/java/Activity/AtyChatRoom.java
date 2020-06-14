@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gugu_client.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class AtyChatRoom extends AppCompatActivity {
     public static AdapterChatMsg adapterChatMsgList;
     private String chatObj;
     private String group;
-
+    private Gson gson = new Gson();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,7 +74,7 @@ public class AtyChatRoom extends AppCompatActivity {
                     msg.setMyInfo(true);
                     msg.setChatObj(chatObj);
                     msg.setGroup(group.equals("0") ? chatObj : " ");
-                    if (sendToChatObj(msg.getContent())) {
+                    if (sendToChatObj(msg)) {
                         ChatMsg.chatMsgList.add(msg);
                         chatMsgList.add(msg);
                         myMsg.setText("");
@@ -93,24 +94,36 @@ public class AtyChatRoom extends AppCompatActivity {
         });
     }
 
-    private boolean sendToChatObj(String content) {
-        String msg = "[CHATMSG]:[" + chatObj + ", " + content + ", " + ServerManager.getServerManager().getIconID() +", Text]";
+//    private boolean sendToChatObj(String content) {
+//        String msg = "[CHATMSG]:[" + chatObj + ", " + content + ", " + ServerManager.getServerManager().getIconID() +", Text]";
+//        ServerManager serverManager = ServerManager.getServerManager();
+//        serverManager.sendMessage(msg,"xxx");
+//        try {
+//            Thread.sleep(300);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        String ack = serverManager.getMessage();
+//        if (ack == null) {
+//            return false;
+//        }
+//        String p = "\\[ACKCHATMSG\\]:\\[(.*)\\]";
+//        Pattern pattern = Pattern.compile(p);
+//        Matcher matcher = pattern.matcher(ack);
+//        return matcher.find() && matcher.group(1).equals("1");
+//    }
+
+    private boolean sendToChatObj(ChatMsg chatMsg) {
         ServerManager serverManager = ServerManager.getServerManager();
-        serverManager.sendMessage(msg,"xxx");
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        String msg = gson.toJson(chatMsg);
+        serverManager.sendMessage(msg, "CHATMSG");
         String ack = serverManager.getMessage();
-        if (ack == null) {
+        if(ack == null) {
             return false;
         }
-        String p = "\\[ACKCHATMSG\\]:\\[(.*)\\]";
-        Pattern pattern = Pattern.compile(p);
-        Matcher matcher = pattern.matcher(ack);
-        return matcher.find() && matcher.group(1).equals("1");
+        return true;
     }
+
 
     private void loadChatMsg() {
         if (group == "0") {

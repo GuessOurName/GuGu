@@ -37,8 +37,8 @@ public class StartServers {
                             if (!listener.isAlive()) {
                                 listener.start();
                             }
-                            ChatSocket chatSocket = new ChatSocket();
-                            chatSocket.dealGetGroupList("1");
+//                            ChatSocket chatSocket = new ChatSocket();
+//                            chatSocket.getUserItem("");
                         }
                     });
                     frame.setVisible(true);

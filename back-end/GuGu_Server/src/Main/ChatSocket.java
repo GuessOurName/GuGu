@@ -116,10 +116,10 @@ public class ChatSocket extends Thread {
                     dealGetFriendList(msg);
                     break;
                 }
-                case "GETGROUPLIST": {
-                    System.out.println("Deal with grouplist!");
-                    dealGetGroupList(msg);
-                    System.out.println("Deal with grouplist done!");
+                case "GETUSERITEM": {
+//                    System.out.println("Deal with grouplist!");
+                    getUserItem(msg);
+//                    System.out.println("Deal with grouplist done!");
                     break;
                 }
                 case "GETFRIENDPROFILE": {
@@ -161,11 +161,13 @@ public class ChatSocket extends Thread {
         }
     }
 
-    public void sendMsg(String msg) {
+    public void sendMsg(String msgType, String msg) {
         try {
             while (socket == null) ;
             if (bufferedWriter != null) {
                 System.out.println("send :" + msg);
+                bufferedWriter.write(msgType + "\n");
+                bufferedWriter.flush();
                 bufferedWriter.write(msg + "\n");
                 bufferedWriter.flush();
                 bufferedWriter.write("-1" + "\n");
@@ -193,7 +195,7 @@ public class ChatSocket extends Thread {
             while (resultSet.next()) {
                 out += "[ACKGETALLGROUPLIST]:[" + resultSet.getString(1) + "] ";
             }
-            sendMsg(out);
+//            sendMsg(out);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -206,6 +208,11 @@ public class ChatSocket extends Thread {
     }
 
     private void dealAddFriend(String msg) {
+        // 根据id查找
+        String sqlSearchFriendById = "SELECT * FROM UserInfo WHERE UserId =" + msg + ";\n";
+        // 根据UserName查找
+        String sqlSearchFriendByName = "SELECT * FROM UserInfo WHERE UserName ='" + msg + "';\n";
+
     }
 
     private void dealUserList(String msg) {
@@ -242,7 +249,7 @@ public class ChatSocket extends Thread {
                     for (SocketMsg SocketMsg : ChatManager.getChatManager().socketList) {
                         if (SocketMsg.getUsername().equals(resultSet.getString(1)) && !SocketMsg.getUsername().equals(userId)) {
                             out = "[GETCHATMSG]:[" + userId + ", " + content + ", " + avatarID + ", Text, " + chatObj + "]";
-                            SocketMsg.getChatSocket().sendMsg(out);
+//                            SocketMsg.getChatSocket().sendMsg(out);
                         }
                     }
                 }
@@ -251,15 +258,15 @@ public class ChatSocket extends Thread {
                 for (SocketMsg socketManager : ChatManager.getChatManager().socketList) {
                     if (socketManager.getUsername().equals(chatObj)) {
                         out = "[GETCHATMSG]:[" + userId + ", " + content + ", " + avatarID + ", Text,  ]";
-                        socketManager.getChatSocket().sendMsg(out);
+//                        socketManager.getChatSocket().sendMsg(out);
                     }
                 }
             }
             out = "[ACKCHATMSG]:[1]";
-            sendMsg(out);
+//            sendMsg(out);
         } catch (SQLException e) {
             out = "[ACKCHATMSG]:[0]";
-            sendMsg(out);
+//            sendMsg(out);
             e.printStackTrace();
         }
     }
@@ -285,15 +292,14 @@ public class ChatSocket extends Thread {
             if (resultSet.next()) {
                 out = "[ACKGETFRIENDPROFILE]:[" + resultSet.getString(1) + ", " + resultSet.getString(2) + ", "
                         + "" + resultSet.getString(3) + ", " + resultSet.getString(4) + "]";
-                sendMsg(out);
+//                sendMsg(out);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void dealGetGroupList(String msg) {
-//        String sql = "SELECT groupName FROM GroupInfo WHERE groupMemberName = '" + userId + "';";
+    public void getUserItem(String msg) {
         String sqlGroupList = "SELECT GroupId FROM GroupInfo WHERE UserId = " + userId + ";\n";
         List<UserItemMsg> userItemMsgList = new ArrayList<UserItemMsg>();
         try {
@@ -327,12 +333,34 @@ public class ChatSocket extends Thread {
 //                userItemMsg.setGroupUserList(userList);
                 userItemMsgList.add(userItemMsg);
             }
-            resultSet.close();
-            String asd = gson.toJson(userItemMsgList);
-            System.out.println(asd);
+//            String asd = gson.toJson(userItemMsgList);
+//            System.out.println(asd);
 //            GroupList g = gson.fromJson(msg,GroupList.class);
 //            List<UserItemMsg> gg = gson.fromJson(asd, new TypeToken<List<UserItemMsg>>() {
 //            }.getType());
+            String sqlFriends = "SELECT FriendId FROM Friends WHERE UserId=" + userId + ";\n";
+            resultSet = statement.executeQuery(sqlFriends);
+            while (resultSet.next()) {
+                UserItemMsg userItemMsg = new UserItemMsg();
+                userItemMsg.setItemType(2);
+                int friendId = resultSet.getInt("FriendId");
+                userItemMsg.setUserId(String.valueOf(friendId));
+                String sqlFriendInfo = "SELECT UserName,AvatarPath,Sign FROM UserInfo WHERE UserId=" + friendId + ";\n";
+                Statement statement1 = connection.createStatement();
+                ResultSet resultSet1 = statement1.executeQuery(sqlFriendInfo);
+                if (resultSet1.next()) {
+                    String friendName = resultSet1.getString("UserName");
+                    String friendAvatarPath = resultSet1.getString("AvatarPath");
+                    String friendSign = resultSet1.getString("Sign");
+                    userItemMsg.setUserName(friendName);
+                    userItemMsg.setAvatarPath(friendAvatarPath);
+                    userItemMsg.setSign(friendSign);
+                }
+                userItemMsgList.add(userItemMsg);
+            }
+            msg = gson.toJson(userItemMsgList);
+            System.out.println(msg);
+            sendMsg("UserItems", msg);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -347,7 +375,7 @@ public class ChatSocket extends Thread {
             while (resultSet.next()) {
                 out += "[ACKGETFRIENDLIST]:[" + resultSet.getString(1) + "] ";
             }
-            sendMsg(out);
+//            sendMsg(out);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -361,7 +389,7 @@ public class ChatSocket extends Thread {
             ResultSet resultSet = statement.executeQuery(sql);
             if (resultSet.next()) {
                 out = "[ACKGETPROFILE]:[" + resultSet.getString(1) + "]";
-                sendMsg(out);
+//                sendMsg(out);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -379,7 +407,7 @@ public class ChatSocket extends Thread {
             ResultSet resultSet = statement.executeQuery(sql);
             if (resultSet.next()) {
                 out = "[ACKGETDRESSUP]:[" + resultSet.getString(1) + ", " + resultSet.getString(2) + "]";
-                sendMsg(out);
+//                sendMsg(out);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -401,13 +429,13 @@ public class ChatSocket extends Thread {
         try {
             Statement statement = connection.createStatement();
             if (statement.executeUpdate(sql) > 0) {
-                sendMsg("[ACKDRESSUP]:[1]");
+//                sendMsg("[ACKDRESSUP]:[1]");
                 return;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        sendMsg("[ACKDRESSUP]:[0]");
+//        sendMsg("[ACKDRESSUP]:[0]");
     }
 
     private void dealRegister(String msg) {
@@ -432,14 +460,14 @@ public class ChatSocket extends Thread {
                 if (resultSet.next()) {
                     int userId = resultSet.getInt("UserId");
                     // 发送注册成功以及UserId
-                    sendMsg("REGACK\n" + String.valueOf(userId));
+                    sendMsg("REGACK", String.valueOf(userId));
                     // 更新UserInfo表
                     String sqluserInfo = "INSERT INTO UserInfo(UserId,UserName) VALUE('" + userId + "','" + iuserName + "');";
                     int resultUserInfo = statement.executeUpdate(sqluserInfo);
                 }
             } else {
                 System.out.println("Register error!");
-                sendMsg("REGFAIL");
+                sendMsg("REGFAIL", "0");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -462,7 +490,7 @@ public class ChatSocket extends Thread {
             ResultSet resultSet = statement.executeQuery(sqlPassword);
             // 密码匹配
             if (resultSet.next() && iPassword.equals(resultSet.getString("Pwd"))) {
-                sendMsg("ACKLOGIN");
+                sendMsg("ACKLOGIN","1");
                 this.userId = iuserId;
                 MainWindow.getMainWindow().setShowMsg(this.userId + " login in!");
                 MainWindow.getMainWindow().addOnlineUsers(this.userId);

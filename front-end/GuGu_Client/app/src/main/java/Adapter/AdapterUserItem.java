@@ -38,10 +38,19 @@ public class AdapterUserItem extends RecyclerView.Adapter<AdapterUserItem.BaseVi
     //设置当前item项数据为传入userItemMsgList中的数据
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        holder.ivAvatar.setImageResource(ImageManager.imagesAvatar[userItemMsgList.get(position).getIconID()]);
-        holder.tvUsername.setText(userItemMsgList.get(position).getUsername());
-        holder.tvSign.setText(userItemMsgList.get(position).getSign());
-        holder.ivAvatar.setTag(userItemMsgList.get(position).getIconID());
+
+        if(userItemMsgList.get(position).getItemType()==1){
+            holder.ivAvatar.setImageResource(ImageManager.imagesAvatar[0]);
+            holder.tvUsername.setText("GroupId : "+userItemMsgList.get(position).getGroupName());
+            holder.tvSign.setText("CreaterId : "+userItemMsgList.get(position).getCreaterId());
+            holder.setUserItemMsg(userItemMsgList.get(position));
+        }
+        else if(userItemMsgList.get(position).getItemType()==2){
+            holder.ivAvatar.setImageResource(ImageManager.imagesAvatar[1]);
+            holder.tvUsername.setText("GroupId : "+userItemMsgList.get(position).getUserName());
+            holder.tvSign.setText("CreaterId : "+userItemMsgList.get(position).getSign());
+            holder.setUserItemMsg(userItemMsgList.get(position));
+        }
     }
 
     @Override
@@ -56,6 +65,7 @@ public class AdapterUserItem extends RecyclerView.Adapter<AdapterUserItem.BaseVi
         private ImageView ivAvatar;
         private TextView tvUsername;
         private TextView tvSign;
+        private UserItemMsg userItemMsg;
 
         BaseViewHolder(View itemView) {
             super(itemView);
@@ -63,30 +73,42 @@ public class AdapterUserItem extends RecyclerView.Adapter<AdapterUserItem.BaseVi
             tvUsername = (TextView) itemView.findViewById(R.id.tv_item_username);
             tvSign = (TextView) itemView.findViewById(R.id.tv_item_sign);
 
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     //监听事件创建聊天室，传入对应聊天用户信息
                     Intent intent = new Intent(context, AtyChatRoom.class);
-                    intent.putExtra("username", tvUsername.getText().toString());
+                    intent.putExtra("Type",userItemMsg.getItemType() );
+                    if(userItemMsg.getItemType()==1){
+                        intent.putExtra("Id",Integer.parseInt(userItemMsg.getGroupId()));
+                    }
+                    else if(userItemMsg.getItemType()==2) {
+                        intent.putExtra("Id",Integer.parseInt(userItemMsg.getUserId()));
+                    }
                     context.startActivity(intent);
 
                     //将建立聊天室的聊天加入Chat碎片中
-                    UserItemMsg userItemMsg = new UserItemMsg();
-                    userItemMsg.setSign(tvSign.getText().toString());
-                    userItemMsg.setIconID((Integer) ivAvatar.getTag());
-                    userItemMsg.setUsername(tvUsername.getText().toString());
                     for (UserItemMsg item : LayoutChats.userItemMsgList) {
-                        if (item.getUsername().equals(userItemMsg.getUsername())) {
-                            return;
+                        if(userItemMsg.getItemType()==1){
+                            if (item.getUserId().equals(userItemMsg.getGroupId())) {
+                                return;
+                            }
+                        }
+                        else if(userItemMsg.getItemType()==2){
+                            if(item.getGroupId().equals(userItemMsg.getUserId())){
+                                return;
+                            }
                         }
                     }
                     LayoutChats.userItemMsgList.add(userItemMsg);
                     UserItemMsg.userItemMsgList.add(userItemMsg);
                 }
             });
+        }
+
+        public void setUserItemMsg(UserItemMsg tmp){
+            this.userItemMsg=tmp;
         }
     }
 }

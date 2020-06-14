@@ -1,11 +1,16 @@
 package Server;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+
+import Activity.AtyChatRoom;
+import Util.ChatMsg;
 
 public class ServerManager extends Thread {
     //    192.168.43.58
@@ -20,7 +25,7 @@ public class ServerManager extends Thread {
     private BufferedWriter bufferedWriter;
     private ReceiveChatMsg receiveChatMsg;
     private static final ServerManager serverManager = new ServerManager();
-
+    private Gson gson = new Gson();
     public static ServerManager getServerManager() {
         return serverManager;
     }
@@ -74,10 +79,38 @@ public class ServerManager extends Thread {
             this.message = "SUCCESS";
         } else if (receiveMsgType.equals("REGACK")) {
             this.message = msg;
-        } else {
+        }else if(receiveMsgType.equals("UserItems")){
+            this.message = msg;
+
+        } else if (receiveMsgType.equals("CHATMSG")) {
+            dealChatMsg(msg);
+        }
+        else {
             this.message = null;
         }
         return;
+    }
+
+    public void dealChatMsg(String msg) {
+        Gson gson = new Gson();
+        ChatMsg chatMsg = gson.fromJson(msg, ChatMsg.class);
+        AtyChatRoom.chatMsgList.add(chatMsg);
+        sendMessage("ACKCHATMSG");
+    }
+
+    public void sendMessage(String msg) {
+        try {
+            while (socket == null) ;
+            if (bufferedWriter != null) {
+                System.out.println("send :" + msg);
+                bufferedWriter.write(msg + "\n");
+                bufferedWriter.flush();
+                bufferedWriter.write("-1" + "\n");
+                bufferedWriter.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void sendMessage(String msg, String msgType) {

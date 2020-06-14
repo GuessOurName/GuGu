@@ -10,7 +10,6 @@ public class UserItemMsg {
     private String avatarPath;
     private String sign;
 
-
     private String groupId;
     private String groupName;
     private String createrId;
@@ -84,4 +83,3 @@ public class UserItemMsg {
     }
 
 }
-

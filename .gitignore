@@ -11,3 +11,4 @@ back-end/GuGu_Server/out/production/GuguServer/Main/ChatSocket.class
 back-end/GuGu_Server/out/production/GuguServer/Main/ServerListener.class
 back-end/GuGu_Server/out/production/GuguServer/Main/StartServers$1$1.class
 front-end/GuGu_Client/.gradle/5.4.1/fileHashes/fileHashes.lock
+*.xml

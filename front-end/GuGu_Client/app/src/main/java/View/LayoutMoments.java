@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gugu_client.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class LayoutMoments extends Fragment {
     private AdapterMomentItem adapterMomentItem;
     private TextView tvNewMoment;
     private Button btnSend;
+    private Gson gson = new Gson();
 
     @Nullable
     @Override
@@ -54,14 +56,18 @@ public class LayoutMoments extends Fragment {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Gson gson = new Gson();
                 MomentMsg momentMsg = new MomentMsg();
-                momentMsg.setUsername(ServerManager.getServerManager().getUserId());
+                momentMsg.setUserId(ServerManager.getServerManager().getUserId());
                 momentMsg.setIconID(ServerManager.getServerManager().getIconID());
                 momentMsg.setMoment(tvNewMoment.getText().toString());
                 momentMsg.setGood(R.drawable.ungood);
                 tvNewMoment.setText("");
                 momentMsgList.add(momentMsg);
                 MomentMsg.momentMsgList.add(momentMsg);
+                String msg = gson.toJson(momentMsg);
+                ServerManager serverManager = ServerManager.getServerManager();
+                serverManager.sendMessage(msg, "MOMENTMSG");
             }
         });
     }

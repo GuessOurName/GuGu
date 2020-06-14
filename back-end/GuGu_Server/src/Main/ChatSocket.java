@@ -123,21 +123,16 @@ public class ChatSocket extends Thread {
                     dealChatMsg(msg);
                     break;
                 }
-                case "USERLIST": {
-                    dealUserList(msg);
-                    break;
-                }
                 case "ADDFRIEND": {
                     dealAddFriend(msg);
-                    break;
-                }
-                case "GROUPMEMBERLIST": {
-                    dealGroupMemberList(msg);
                     break;
                 }
                 case "ADDGROUP": {
                     dealAddGroup(msg);
                     break;
+                }
+                case "MOMENTMSG":{
+                    dealMoment(msg);
                 }
                 default:
                     dealError();
@@ -150,7 +145,7 @@ public class ChatSocket extends Thread {
         try {
             while (socket == null) ;
             if (bufferedWriter != null) {
-                System.out.println("send :" + msg);
+                System.out.println("sending..." + msg);
                 bufferedWriter.write(msgType + "\n");
                 bufferedWriter.flush();
                 bufferedWriter.write(msg + "\n");
@@ -175,19 +170,38 @@ public class ChatSocket extends Thread {
     private void dealAddGroup(String msg) {
     }
 
-    private void dealGroupMemberList(String msg) {
+    private void dealMoment(String msg){
+        MomentMsg momentMsg = gson.fromJson(msg,MomentMsg.class);
+        String sqlMoment = "INSERT INTO Comments VALUE()";
     }
+
 
     private void dealAddFriend(String msg) {
         // 根据id查找
         String sqlSearchFriendById = "SELECT * FROM UserInfo WHERE UserId =" + msg + ";\n";
         // 根据UserName查找
         String sqlSearchFriendByName = "SELECT * FROM UserInfo WHERE UserName ='" + msg + "';\n";
-
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlSearchFriendById);
+            if(resultSet.next()){
+                String sqlIsFriend ="SELECT * FROM Friends WHERE UserId="+userId+"and FriendId="+msg+";\n";
+                Statement statement1 = connection.createStatement();
+                ResultSet resultSet1 = statement1.executeQuery(sqlIsFriend);
+                if(!resultSet1.next()){
+                    String sqlAddFriend1 = "INSERT INTO Friends VALUE("+userId+","+msg+");\n";
+                    String sqlAddFriend2 = "INSERT INTO Friends VALUE("+msg+","+userId+");\n";
+                    Statement statement2 = connection.createStatement();
+                    int result1 = statement2.executeUpdate(sqlAddFriend1);
+                    int result2 = statement2.executeUpdate(sqlAddFriend2);
+                    sendMsg("ACKADDFRIEND","1");
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
-    private void dealUserList(String msg) {
-    }
 
     private void dealChatMsg(String msg) {
         try {

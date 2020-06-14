@@ -6,9 +6,19 @@ import java.util.List;
 public class MomentMsg {
 
     private int iconID;
-    private String username;
+    private String userId;
     private String moment;
     private int good;
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     public static List<MomentMsg> momentMsgList = new ArrayList<>();
 
     public int getIconID() {
@@ -19,12 +29,12 @@ public class MomentMsg {
         this.iconID = iconID;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getMoment() {

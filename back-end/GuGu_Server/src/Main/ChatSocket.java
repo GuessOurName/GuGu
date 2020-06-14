@@ -19,6 +19,8 @@ import com.google.gson.Gson;
 import Util.LoginMsg;
 import com.google.gson.reflect.TypeToken;
 
+
+
 public class ChatSocket extends Thread {
 
     private String username;
@@ -408,20 +410,23 @@ public class ChatSocket extends Thread {
     }
 
     private void dealLogin(String msg) {
+        // 处理登录账号和密码
         loginMsg = gson.fromJson(msg, LoginMsg.class);
         System.out.println("Deal Login Message : " + loginMsg.toString());
-        String iuserName = loginMsg.getUsername();
+        String iuserId = loginMsg.getUsername();
         String iPassword = loginMsg.getPassword();
 
-        System.out.println(iuserName);
+        System.out.println(iuserId);
         System.out.println(iPassword);
-        String sqlPassword = "SELECT Pwd FROM User WHERE UserId = " + iuserName + ";";
+        // 根据Id查询密码
+        String sqlPassword = "SELECT Pwd FROM User WHERE UserId = " + iuserId + ";";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlPassword);
+            // 密码匹配
             if (resultSet.next() && iPassword.equals(resultSet.getString("Pwd"))) {
                 sendMsg("ACKLOGIN");
-                this.username = iuserName;
+                this.username = iuserId;
                 MainWindow.getMainWindow().setShowMsg(this.username + " login in!");
                 MainWindow.getMainWindow().addOnlineUsers(this.username);
                 socketMsg = new SocketMsg(this, this.username);

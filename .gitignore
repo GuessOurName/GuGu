@@ -1,2 +1,8 @@
 back-end\GuGu_Server\.idea
 back-end\GuGu_Server\out
+back-end/GuGu_Server/out/production/GuguServer/META-INF/GuguServer.kotlin_module
+back-end/GuGu_Server/out/production/GuguServer/Util/Group.class
+front-end/GuGu_Client/.idea/workspace.xml
+front-end/GuGu_Client/app/build/intermediates/javac/debug/classes/Util/GroupMsg.class
+front-end/GuGu_Client/.idea/workspace.xml
+front-end/GuGu_Client/app/build/intermediates/transforms/dexBuilder/debug/0/Util/GroupMsg.dex

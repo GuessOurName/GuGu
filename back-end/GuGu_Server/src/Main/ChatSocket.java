@@ -6,18 +6,17 @@ import View.MainWindow;
 
 import java.io.*;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
 import Util.LoginMsg;
-import com.google.gson.reflect.TypeToken;
+import Util.UserItemMsg;
 
 
 public class ChatSocket extends Thread {
@@ -88,11 +87,11 @@ public class ChatSocket extends Thread {
     public void delMessage(String receiveMsgType, String msg) {
         if (receiveMsgType != null) {
             switch (receiveMsgType) {
-                case "LOGIN": {
+                case "LOGIN": { //1
                     dealLogin(msg);
                     break;
                 }
-                case "REGISTER": {
+                case "REGISTER": {  //1
                     dealRegister(msg);
                     break;
                 }
@@ -112,25 +111,15 @@ public class ChatSocket extends Thread {
                     dealGetProfile(msg);
                     break;
                 }
-                case "GETFRIENDLIST": {
-                    dealGetFriendList(msg);
-                    break;
-                }
-                case "GETUSERITEM": {
-//                    System.out.println("Deal with grouplist!");
+                case "GETUSERITEM": {   //1
                     getUserItem(msg);
-//                    System.out.println("Deal with grouplist done!");
-                    break;
-                }
-                case "GETFRIENDPROFILE": {
-                    dealGetFriendProfile(msg);
                     break;
                 }
                 case "STATE": {
                     dealState(msg);
                     break;
                 }
-                case "CHATMSG": {
+                case "CHATMSG": {   //1
                     dealChatMsg(msg);
                     break;
                 }
@@ -148,10 +137,6 @@ public class ChatSocket extends Thread {
                 }
                 case "ADDGROUP": {
                     dealAddGroup(msg);
-                    break;
-                }
-                case "GETALLGROUPLIST": {
-                    dealGetAllGroupList(msg);
                     break;
                 }
                 default:
@@ -186,20 +171,6 @@ public class ChatSocket extends Thread {
     private void dealError() {
     }
 
-    private void dealGetAllGroupList(String msg) {
-        String out = null;
-        String sql = "SELECT groupName FROM Groups;";
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                out += "[ACKGETALLGROUPLIST]:[" + resultSet.getString(1) + "] ";
-            }
-//            sendMsg(out);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void dealAddGroup(String msg) {
     }
@@ -225,83 +196,60 @@ public class ChatSocket extends Thread {
             e.printStackTrace();
         }
         ChatMsg chatMsg = gson.fromJson(msg, ChatMsg.class);
+        String from = chatMsg.getUsername();
         String target = chatMsg.getChatObj();
-        if (chatMsg.getIsGroup() == 1) {
+        String content = chatMsg.getContent();
+        Date curTime = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
+        chatMsg.setMyInfo(false);
+        String transmit = gson.toJson(chatMsg);
+
+        if (chatMsg.getIsGroup() == 1) {
+            String sqlMsgInsert = "INSERT INTO GroupChatTxt VALUE(" + Integer.valueOf(target) + "," + Integer.valueOf(from) + ",'" + content + "','" + simpleDateFormat.format(curTime) + "');\n";
+            try {
+                Statement statement = connection.createStatement();
+                int result = statement.executeUpdate(sqlMsgInsert);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            String sqlGroup = "SELECT * FROM GroupInfo WHERE GroupId = " + target + ";\n";
+            try {
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sqlGroup);
+                while (resultSet.next()) {
+                    // 寻找在线用户发送
+                    for (SocketMsg SocketMsg : ChatManager.getChatManager().socketList) {
+                        if (SocketMsg.getUsername().equals(resultSet.getString("UserId")) && !SocketMsg.getUsername().equals(userId)) {
+                            SocketMsg.getChatSocket().sendMsg("CHATMSG", transmit);
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         } else {
-            chatMsg.setMyInfo(false);
-            String transmit = gson.toJson(chatMsg);
+            // 插入记录
+            String sqlMsgInsert = "INSERT INTO ChatTxt VALUE(" + Integer.valueOf(target) + "," + Integer.valueOf(from) + ",'" + content + "','" + simpleDateFormat.format(curTime) + "');\n";
+            try {
+                Statement statement = connection.createStatement();
+                int result = statement.executeUpdate(sqlMsgInsert);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
             for (SocketMsg SocketMsg : ChatManager.getChatManager().socketList) {
-                if (SocketMsg.getUsername().equals(target)) {
+                if (SocketMsg.getUsername().equals(target) && !SocketMsg.getUsername().equals(userId)) {
                     SocketMsg.getChatSocket().sendMsg("CHATMSG", transmit);
                     break;
                 }
             }
         }
-
-//        String sqlGroup = "SELECT * FROM Groups WHERE groupName = '" + chatObj + "';";
-//        try {
-//            Statement statement = connection.createStatement();
-//            ResultSet resultSet = statement.executeQuery(sqlGroup);
-//            // gruop chat
-//            if (resultSet.next()) {
-//                // find all group members to send msg
-//                String sql = "SELECT groupMemberName FROM GROUPINFO WHERE groupName = '" + chatObj + "';";
-//                resultSet = statement.executeQuery(sql);
-//                while (resultSet.next()) {
-//                    // if user is online , then send.
-//                    for (SocketMsg SocketMsg : ChatManager.getChatManager().socketList) {
-//                        if (SocketMsg.getUsername().equals(resultSet.getString(1)) && !SocketMsg.getUsername().equals(userId)) {
-//                            out = "[GETCHATMSG]:[" + userId + ", " + content + ", " + avatarID + ", Text, " + chatObj + "]";
-////                            SocketMsg.getChatSocket().sendMsg(out);
-//                        }
-//                    }
-//                }
-//                // private chat
-//            } else {
-//                for (SocketMsg socketManager : ChatManager.getChatManager().socketList) {
-//                    if (socketManager.getUsername().equals(chatObj)) {
-//                        out = "[GETCHATMSG]:[" + userId + ", " + content + ", " + avatarID + ", Text,  ]";
-////                        socketManager.getChatSocket().sendMsg(out);
-//                    }
-//                }
-//            }
-//            out = "[ACKCHATMSG]:[1]";
-////            sendMsg(out);
-//        } catch (SQLException e) {
-//            out = "[ACKCHATMSG]:[0]";
-////            sendMsg(out);
-//            e.printStackTrace();
-//        }
     }
 
     private void dealState(String msg) {
     }
 
-    private void dealGetFriendProfile(String msg) {
-        String friendName = null;
-        String p = "\\[GETFRIENDPROFILE\\]:\\[(.*)\\]";
-        Pattern pattern = Pattern.compile(p);
-        Matcher matcher = pattern.matcher(msg);
-        if (matcher.find()) {
-            friendName = matcher.group(1);
-        } else {
-            return;
-        }
-        String out = null;
-        String sql = "SELECT avatar, sign, background, state FROM UserInfo WHERE username = '" + friendName + "';";
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            if (resultSet.next()) {
-                out = "[ACKGETFRIENDPROFILE]:[" + resultSet.getString(1) + ", " + resultSet.getString(2) + ", "
-                        + "" + resultSet.getString(3) + ", " + resultSet.getString(4) + "]";
-//                sendMsg(out);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void getUserItem(String msg) {
         String sqlGroupList = "SELECT GroupId FROM GroupInfo WHERE UserId = " + userId + ";\n";
@@ -365,21 +313,6 @@ public class ChatSocket extends Thread {
             msg = gson.toJson(userItemMsgList);
             System.out.println(msg);
             sendMsg("UserItems", msg);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void dealGetFriendList(String msg) {
-        String out = null;
-        String sql = "SELECT friendsName FROM Friends WHERE username = " + userId + ";";
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                out += "[ACKGETFRIENDLIST]:[" + resultSet.getString(1) + "] ";
-            }
-//            sendMsg(out);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -485,8 +418,6 @@ public class ChatSocket extends Thread {
         String iuserId = loginMsg.getUsername();
         String iPassword = loginMsg.getPassword();
 
-        System.out.println(iuserId);
-        System.out.println(iPassword);
         // 根据Id查询密码
         String sqlPassword = "SELECT Pwd FROM User WHERE UserId = " + iuserId + ";";
         try {

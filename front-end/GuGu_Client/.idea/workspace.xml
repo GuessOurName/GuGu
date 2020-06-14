@@ -11,49 +11,61 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02c684c5-700a-48a0-af9f-6a41755d7351" name="Default Changelist" comment="update">
-      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/ChatSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/ChatSocket.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/StartServers$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/StartServers$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/DB/DBManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/ChatManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/ChatSocket.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/ServerListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/SocketMsg.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/StartServers$1$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/StartServers$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/StartServers.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Util/LoginMsg.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Util/RegisterMsg.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/View/MainWindow$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/View/MainWindow$OnStartServersListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/View/MainWindow.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/src/Main/ChatSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/GuGu_Server/src/Main/ChatSocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/src/Main/StartServers.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/GuGu_Server/src/Main/StartServers.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Activity/AtyChatRoom$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Activity/AtyChatRoom$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Activity/AtyChatRoom$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Activity/AtyChatRoom$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Activity/AtyChatRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Activity/AtyChatRoom.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Activity/AtyLoginOrRegister.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Activity/AtyLoginOrRegister.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Adapter/AdapterUserItem$BaseViewHolder$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Adapter/AdapterUserItem$BaseViewHolder$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Adapter/AdapterUserItem$BaseViewHolder.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Adapter/AdapterUserItem$BaseViewHolder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Adapter/AdapterUserItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Adapter/AdapterUserItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Server/ReceiveChatMsg.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Server/ReceiveChatMsg.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Server/ServerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Server/ServerManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Util/ChatMsg.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Util/ChatMsg.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Util/UserItemMsg.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Util/UserItemMsg.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutContacts$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutContacts$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutContacts$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutContacts$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutContacts.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutContacts.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutSlide.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutSlide.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Activity/AtyChatRoom$1.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Activity/AtyChatRoom$1.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Activity/AtyChatRoom$2.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Activity/AtyChatRoom$2.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Activity/AtyChatRoom.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Activity/AtyChatRoom.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Activity/AtyLoginOrRegister.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Activity/AtyLoginOrRegister.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Adapter/AdapterUserItem$BaseViewHolder$1.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Adapter/AdapterUserItem$BaseViewHolder$1.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Adapter/AdapterUserItem$BaseViewHolder.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Adapter/AdapterUserItem$BaseViewHolder.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Adapter/AdapterUserItem.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Adapter/AdapterUserItem.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Server/ReceiveChatMsg.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Server/ReceiveChatMsg.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Server/ServerManager.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Server/ServerManager.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Util/ChatMsg.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Util/ChatMsg.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Util/UserItemMsg.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Util/UserItemMsg.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutContacts$1.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutContacts$1.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutContacts$2.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutContacts$2.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutContacts.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutContacts.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutSlide.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutSlide.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/outputs/apk/debug/app-debug.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/Activity/AtyChatRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/Activity/AtyChatRoom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/Adapter/AdapterUserItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/Adapter/AdapterUserItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/Server/ServerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/Server/ServerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/Util/UserItemMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/Util/UserItemMsg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/View/LayoutContacts.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/View/LayoutContacts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/View/LayoutSlide.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/View/LayoutSlide.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,6 +208,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="706" y="238" key="#app" timestamp="1592153582687">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="706" y="238" key="#app/0.0.1920.1080@0.0.1920.1080" timestamp="1592153582687" />
     <state x="1302" y="289" key="#com.intellij.ide.util.MemberChooser" timestamp="1592135890679">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

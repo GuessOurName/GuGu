@@ -2,6 +2,7 @@ package Main;
 
 import DB.DBManager;
 import Util.LoginMsg;
+import Util.RegisterMsg;
 import View.MainWindow;
 
 import java.io.*;
@@ -13,11 +14,12 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import com.google.gson.Gson;
 import Util.LoginMsg;
 import com.google.gson.reflect.TypeToken;
 
-public class ChatSocket extends Thread{
+public class ChatSocket extends Thread {
 
     private String username;
     private Socket socket;
@@ -26,7 +28,7 @@ public class ChatSocket extends Thread{
     private BufferedWriter bufferedWriter;
     private Connection connection = DBManager.getDBManager().getConnection();
     private SocketMsg socketMsg;
-    private Gson gson=new Gson();
+    private Gson gson = new Gson();
     private LoginMsg loginMsg;
 
     public ChatSocket(Socket s) {
@@ -44,22 +46,20 @@ public class ChatSocket extends Thread{
     public void run() {
         try {
             String line = null;
-            String receiveMsgType=null;
-            String msg=null;
+            String receiveMsgType = null;
+            String msg = null;
             while ((line = bufferedReader.readLine()) != null) {
-                System.out.println("The Server Receive line : "+line);
+                System.out.println("The Server Receive line : " + line);
                 if (!line.equals("-1")) {
-                    if(receiveMsgType==null){
-                        receiveMsgType=line;
-                    }
-                    else{
-                        msg=line;
+                    if (receiveMsgType == null) {
+                        receiveMsgType = line;
+                    } else {
+                        msg = line;
                     }
                 } else {
-
-                    delMessage(receiveMsgType,msg);
-                    receiveMsgType=null;
-                    msg=null;
+                    delMessage(receiveMsgType, msg);
+                    receiveMsgType = null;
+                    msg = null;
                 }
             }
         } catch (IOException e) {
@@ -79,26 +79,76 @@ public class ChatSocket extends Thread{
         }
     }
 
-    public void delMessage(String receiveMsgType,String msg) {
+    public void delMessage(String receiveMsgType, String msg) {
         if (receiveMsgType != null) {
-            switch(receiveMsgType) {
-                case "LOGIN": { dealLogin(msg); break; }
-                case "REGISTER": { dealRegister(msg); break; }
-                case "DRESSUP": { dealDressUp(msg); break; }
-                case "GETDRESSUP": { dealGetDressUp(msg); break; }
-                case "PROFILE": { dealProfile(msg); break; }
-                case "GETPROFILE": { dealGetProfile(msg); break; }
-                case "GETFRIENDLIST": { dealGetFriendList(msg); break; }
-                case "GETGROUPLIST": { dealGetGroupList(msg); break; }
-                case "GETFRIENDPROFILE": { dealGetFriendProfile(msg); break; }
-                case "STATE": { dealState(msg); break; }
-                case "CHATMSG": { dealChatMsg(msg); break; }
-                case "USERLIST": { dealUserList(msg); break; }
-                case "ADDFRIEND": { dealAddFriend(msg); break; }
-                case "GROUPMEMBERLIST": { dealGroupMemberList(msg); break; }
-                case "ADDGROUP": { dealAddGroup(msg); break; }
-                case "GETALLGROUPLIST": { dealGetAllGroupList(msg); break;}
-                default : dealError(); break;
+            switch (receiveMsgType) {
+                case "LOGIN": {
+                    dealLogin(msg);
+                    break;
+                }
+                case "REGISTER": {
+                    dealRegister(msg);
+                    break;
+                }
+                case "DRESSUP": {
+                    dealDressUp(msg);
+                    break;
+                }
+                case "GETDRESSUP": {
+                    dealGetDressUp(msg);
+                    break;
+                }
+                case "PROFILE": {
+                    dealProfile(msg);
+                    break;
+                }
+                case "GETPROFILE": {
+                    dealGetProfile(msg);
+                    break;
+                }
+                case "GETFRIENDLIST": {
+                    dealGetFriendList(msg);
+                    break;
+                }
+                case "GETGROUPLIST": {
+                    dealGetGroupList(msg);
+                    break;
+                }
+                case "GETFRIENDPROFILE": {
+                    dealGetFriendProfile(msg);
+                    break;
+                }
+                case "STATE": {
+                    dealState(msg);
+                    break;
+                }
+                case "CHATMSG": {
+                    dealChatMsg(msg);
+                    break;
+                }
+                case "USERLIST": {
+                    dealUserList(msg);
+                    break;
+                }
+                case "ADDFRIEND": {
+                    dealAddFriend(msg);
+                    break;
+                }
+                case "GROUPMEMBERLIST": {
+                    dealGroupMemberList(msg);
+                    break;
+                }
+                case "ADDGROUP": {
+                    dealAddGroup(msg);
+                    break;
+                }
+                case "GETALLGROUPLIST": {
+                    dealGetAllGroupList(msg);
+                    break;
+                }
+                default:
+                    dealError();
+                    break;
             }
         }
     }
@@ -108,9 +158,9 @@ public class ChatSocket extends Thread{
             while (socket == null) ;
             if (bufferedWriter != null) {
                 System.out.println("send :" + msg);
-                bufferedWriter.write(msg+"\n");
+                bufferedWriter.write(msg + "\n");
                 bufferedWriter.flush();
-                bufferedWriter.write("-1"+"\n");
+                bufferedWriter.write("-1" + "\n");
                 bufferedWriter.flush();
             }
         } catch (IOException e) {
@@ -170,7 +220,7 @@ public class ChatSocket extends Thread{
             return;
         }
         String out = null;
-        String sqlGroup = "SELECT * FROM Groups WHERE groupName = '" + chatObj+ "';";
+        String sqlGroup = "SELECT * FROM Groups WHERE groupName = '" + chatObj + "';";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlGroup);
@@ -217,7 +267,7 @@ public class ChatSocket extends Thread{
         if (matcher.find()) {
             friendName = matcher.group(1);
         } else {
-            return ;
+            return;
         }
         String out = null;
         String sql = "SELECT avatar, sign, background, state FROM UserInfo WHERE username = '" + friendName + "';";
@@ -308,7 +358,7 @@ public class ChatSocket extends Thread{
             backgroundID = matcher.group(2);
         }
         System.out.println(acatarID + "   " + backgroundID);
-        String sql = "UPDATE UserInfo SET avatar =  " + acatarID + ", background = " + backgroundID +" WHERE username = '" + username + "'";
+        String sql = "UPDATE UserInfo SET avatar =  " + acatarID + ", background = " + backgroundID + " WHERE username = '" + username + "'";
         try {
             Statement statement = connection.createStatement();
             if (statement.executeUpdate(sql) > 0) {
@@ -322,75 +372,64 @@ public class ChatSocket extends Thread{
     }
 
     private void dealRegister(String msg) {
-    }
-
-//    private void dealLogin(String msg) {
-//        String iusername = null;
-//        String iPassword = null;
-//
-//        String p = "\\[LOGIN\\]:\\[(.*), (.*)\\]";
-//        Pattern pattern = Pattern.compile(p);
-//        Matcher matcher = pattern.matcher(msg);
-//        if (matcher.find()) {
-//            iusername = matcher.group(1);
-//            iPassword = matcher.group(2);
-//        }
-//        System.out.println(iusername);
-//        System.out.println(iPassword);
-//        String sql = "SELECT password FROM Users WHERE username = '" + iusername + "';";
-//        try {
-//            Statement statement = connection.createStatement();
-//            ResultSet resultSet = statement.executeQuery(sql);
-//            if (resultSet.next() && iPassword.equals(resultSet.getString(1)) ) {
-//                sendMsg("[ACKLOGIN]:[1]");
-//                this.username = iusername;
-//                MainWindow.getMainWindow().setShowMsg(this.username + " login in!");
-//                MainWindow.getMainWindow().addOnlineUsers(this.username);
-//                socketMsg = new SocketMsg(this,  this.username);
-//                ChatManager.getChatManager().add(socketMsg);
-//                return ;
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        sendMsg("[ACKLOGIN]:[0]");
-//    }
-
-    private void dealLogin(String msg) {
-        loginMsg=gson.fromJson(msg,LoginMsg.class);
-        System.out.println("Deal Login Message : "+loginMsg.toString());
-        String iusername = loginMsg.getUsername();
-        String iPassword = loginMsg.getPassword();
-
-        System.out.println(iusername);
+        // 接收名称，密码，返回一个登录ID
+        RegisterMsg regMsg = gson.fromJson(msg, RegisterMsg.class);
+        System.out.println("Deal Register Message : " + regMsg.toString());
+        String iuserName = regMsg.getUserName();
+        String iPassword = regMsg.getUserPwd();
+        System.out.println(iuserName);
         System.out.println(iPassword);
-        String sql = "SELECT password FROM Users WHERE username = '" + iusername + "';";
+        String sqlregMsg = "INSERT INTO User(Pwd) VALUE('" + iPassword + "');";
+        String sqluserId = "SELECT UserId FROM User ORDER BY UserId DESC LIMIT 1;";
+
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            if (resultSet.next() && iPassword.equals(resultSet.getString(1)) ) {
-                sendMsg("ACKLOGIN");
-                this.username = iusername;
-                MainWindow.getMainWindow().setShowMsg(this.username + " login in!");
-                MainWindow.getMainWindow().addOnlineUsers(this.username);
-                socketMsg = new SocketMsg(this,  this.username);
-                ChatManager.getChatManager().add(socketMsg);
-                return ;
+            int resultReg = statement.executeUpdate(sqlregMsg);
+            // 注册成功
+            if (resultReg > 0) {
+                System.out.println(iuserName + "register success!");
+                ResultSet resultSet = statement.executeQuery(sqluserId);
+                // 更新User表
+                if (resultSet.next()) {
+                    int userId = resultSet.getInt("UserId");
+                    // 发送注册成功以及UserId
+                    sendMsg("REGACK\n" + String.valueOf(userId));
+                    // 更新UserInfo表
+                    String sqluserInfo = "INSERT INTO UserInfo(UserId,UserName) VALUE('" + userId + "','" + iuserName + "');";
+                    int resultUserInfo = statement.executeUpdate(sqluserInfo);
+                }
+            } else {
+                System.out.println("Register error!");
+                sendMsg("REGFAIL");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        sendMsg("[ACKLOGIN]:[0]");
     }
 
-    public String getAction(String msg) {
-        String p = "\\[(.*)\\]:";
-        Pattern pattern = Pattern.compile(p);
-        Matcher matcher = pattern.matcher(msg);
-        if (matcher.find()) {
-            return matcher.group(1);
-        } else {
-            return "error";
+    private void dealLogin(String msg) {
+        loginMsg = gson.fromJson(msg, LoginMsg.class);
+        System.out.println("Deal Login Message : " + loginMsg.toString());
+        String iuserName = loginMsg.getUsername();
+        String iPassword = loginMsg.getPassword();
+
+        System.out.println(iuserName);
+        System.out.println(iPassword);
+        String sqlPassword = "SELECT Pwd FROM User WHERE UserId = " + iuserName + ";";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlPassword);
+            if (resultSet.next() && iPassword.equals(resultSet.getString("Pwd"))) {
+                sendMsg("ACKLOGIN");
+                this.username = iuserName;
+                MainWindow.getMainWindow().setShowMsg(this.username + " login in!");
+                MainWindow.getMainWindow().addOnlineUsers(this.username);
+                socketMsg = new SocketMsg(this, this.username);
+                ChatManager.getChatManager().add(socketMsg);
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

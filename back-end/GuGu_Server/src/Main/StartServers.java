@@ -33,11 +33,6 @@ public class StartServers {
                         public void start() {
                             dbManager.addDBDriver();
                             dbManager.connectDB();
-                            try {
-                                dbManager.initDB();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
                             if (!listener.isAlive()) {
                                 listener.start();
                             }

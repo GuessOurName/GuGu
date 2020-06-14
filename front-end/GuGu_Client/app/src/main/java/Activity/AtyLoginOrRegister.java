@@ -9,8 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gugu_client.R;
@@ -21,6 +23,7 @@ import java.util.regex.Pattern;
 
 import Server.ServerManager;
 import Util.LoginMsg;
+import Util.RegisterMsg;
 
 public class AtyLoginOrRegister extends AppCompatActivity implements View.OnClickListener {
 
@@ -92,9 +95,13 @@ public class AtyLoginOrRegister extends AppCompatActivity implements View.OnClic
                 break;
             }
             case R.id.btn_register: {
-                Intent intent = new Intent(this, AtyMain.class);
-                startActivity(intent);
-                finish();
+                String username = etRegisterUsername.getText().toString();
+                String password1 = etRegisterPassword.getText().toString();
+                String password2 = etInsurePassword.getText().toString();
+
+                register(username, password1, password2);
+                System.out.println(username);
+
                 break;
             }
             default:
@@ -123,9 +130,41 @@ public class AtyLoginOrRegister extends AppCompatActivity implements View.OnClic
 
         // 处理返回消息
         if (ack == null) {
+            Toast.makeText(AtyLoginOrRegister.this, "登录失败，请检查账号或密码", Toast.LENGTH_SHORT).show();
             return false;
         }
         serverManager.setMessage(null);
         return ack.equals("SUCCESS");
+    }
+
+    private boolean register(String username, String password1, String password2) {
+        if(username.length() == 0) {
+            Toast.makeText(AtyLoginOrRegister.this, "用户名为空", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!password1.equals(password2)) {
+            Toast.makeText(AtyLoginOrRegister.this, "两次密码不一致", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if(password1.length() < 6) {
+            Toast.makeText(AtyLoginOrRegister.this, "密码长度太短", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        RegisterMsg registerMsg = new RegisterMsg(username,password1);
+        String msg = gson.toJson(registerMsg);
+        serverManager.sendMessage(this,msg,"REGISTER");
+        String ack = serverManager.getMessage();
+        if (ack == null) {
+            Toast.makeText(AtyLoginOrRegister.this, "注册失败", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        serverManager.setMessage(null);
+        AlertDialog alertDialog1 = new AlertDialog.Builder(this)
+                .setTitle("注册成功")//标题
+                .setMessage("你的登录账号是"+ack)//内容
+                .setIcon(R.mipmap.ic_launcher)//图标
+                .create();
+        alertDialog1.show();
+        return true;
     }
 }

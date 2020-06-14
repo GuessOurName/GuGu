@@ -13,10 +13,10 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class ServerManager extends Thread {
-//    192.168.43.58
+    //    192.168.43.58
 //    10.85.15.88
 //    private Gson gson=new Gson();
-    private static final String IP = "192.168.137.109";
+    private static final String IP = "10.0.2.2";
     private Socket socket;
     private String username;
     private int iconID;
@@ -37,26 +37,25 @@ public class ServerManager extends Thread {
     public void run() {
         try {
             socket = new Socket(IP, 27777);
-            bufferedReader =  new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+            bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
             bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"));
 
-            String msg=null;
-            String receiveMsgType=null;
+            String msg = null;
+            String receiveMsgType = null;
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                System.out.println("The Client Receive line : "+line);
+                System.out.println("The Client Receive line : " + line);
                 if (!line.equals("-1")) {
-                    if(receiveMsgType==null){
-                        receiveMsgType=line;
-                    }
-                    else{
-                        msg=line;
+                    if (receiveMsgType == null) {
+                        receiveMsgType = line;
+                    } else {
+                        msg = line;
                     }
                 } else {
-                    dealMsg(receiveMsgType,msg);
-                    receiveMsgType=null;
-                    msg=null;
-                    line=null;
+                    dealMsg(receiveMsgType, msg);
+                    receiveMsgType = null;
+                    msg = null;
+                    line = null;
                 }
             }
 
@@ -75,19 +74,23 @@ public class ServerManager extends Thread {
         }
     }
 
-    public void dealMsg(String receiveMsgType,String msg){
-        if(receiveMsgType.equals("ACKLOGIN")){
-            this.message="SUCCESS";
+    public void dealMsg(String receiveMsgType, String msg) {
+        if (receiveMsgType.equals("ACKLOGIN")) {
+            this.message = "SUCCESS";
+        } else if (receiveMsgType.equals("REGACK")) {
+            this.message = msg;
+        } else {
+            this.message = null;
         }
         return;
     }
 
-    public void sendMessage(Context context, String msg,String msgType) {
+    public void sendMessage(Context context, String msg, String msgType) {
         try {
             while (socket == null) ;
             if (bufferedWriter != null) {
-                System.out.println("Send Message : [ "+msgType +" ] : " +msg);
-                bufferedWriter.write(msgType+"\n");
+                System.out.println("Send Message : [ " + msgType + " ] : " + msg);
+                bufferedWriter.write(msgType + "\n");
                 bufferedWriter.flush();
                 bufferedWriter.write(msg + "\n");
                 bufferedWriter.flush();

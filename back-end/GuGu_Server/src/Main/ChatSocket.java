@@ -5,7 +5,6 @@ import Util.*;
 import View.MainWindow;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -32,7 +31,7 @@ public class ChatSocket extends Thread {
     private SocketMsg socketMsg;
     private Gson gson = new Gson();
     private LoginMsg loginMsg;
-    private List<Group> groupList = new ArrayList<>();
+    private List<UserItemMsg> userItemMsgList = new ArrayList<>();
 
 
     public ChatSocket() {
@@ -296,16 +295,16 @@ public class ChatSocket extends Thread {
     public void dealGetGroupList(String msg) {
 //        String sql = "SELECT groupName FROM GroupInfo WHERE groupMemberName = '" + userId + "';";
         String sqlGroupList = "SELECT GroupId FROM GroupInfo WHERE UserId = " + userId + ";\n";
-        List<Group> groupList = new ArrayList<Group>();
+        List<UserItemMsg> userItemMsgList = new ArrayList<UserItemMsg>();
         try {
             // 一个st只能对应一个rs
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlGroupList);
             while (resultSet.next()) {
-                Group group = new Group();
-                group.setItemType(1);
+                UserItemMsg userItemMsg = new UserItemMsg();
+                userItemMsg.setItemType(1);
                 int groupId = resultSet.getInt("GroupId");
-                group.setGroupId(groupId);
+                userItemMsg.setGroupId(String.valueOf(groupId));
                 // 查询群名称和创建者
                 String sqlGroups = "SELECT GroupName,CreaterId FROM Groups WHERE GroupId =" + groupId + ";\n";
                 Statement statement1 = connection.createStatement();
@@ -313,34 +312,27 @@ public class ChatSocket extends Thread {
                 if (resultSet1.next()) {
                     String groupName = resultSet1.getString("GroupName");
                     int createrId = resultSet1.getInt("CreaterId");
-                    group.setCreaterId(createrId);
-                    group.setGroupName(groupName);
+                    userItemMsg.setCreaterId(String.valueOf(createrId));
+                    userItemMsg.setGroupName(groupName);
                 }
                 // 查询群成员
-                List<String> userList = new ArrayList<String>();
-                String sqlGroupUser = "SELECT UserId FROM GroupInfo WHERE GroupId =" + groupId + ";\n";
-                Statement statement2 = connection.createStatement();
-                ResultSet resultSet2 = statement2.executeQuery(sqlGroupUser);
-                while (resultSet2.next()) {
-                    int groupUserId = resultSet2.getInt("UserId");
-                    userList.add(String.valueOf(groupUserId));
-                }
-                group.setGroupUserList(userList);
-                groupList.add(group);
+//                List<String> userList = new ArrayList<String>();
+//                String sqlGroupUser = "SELECT UserId FROM GroupInfo WHERE GroupId =" + groupId + ";\n";
+//                Statement statement2 = connection.createStatement();
+//                ResultSet resultSet2 = statement2.executeQuery(sqlGroupUser);
+//                while (resultSet2.next()) {
+//                    int groupUserId = resultSet2.getInt("UserId");
+//                    userList.add(String.valueOf(groupUserId));
+//                }
+//                userItemMsg.setGroupUserList(userList);
+                userItemMsgList.add(userItemMsg);
             }
             resultSet.close();
-            String asd = gson.toJson(groupList);
+            String asd = gson.toJson(userItemMsgList);
             System.out.println(asd);
 //            GroupList g = gson.fromJson(msg,GroupList.class);
-            List<Group> gg = gson.fromJson(asd, new TypeToken<List<Group>>() {
-            }.getType());
-            for (Group group : gg) {
-                System.out.println(group.getGroupName());
-                System.out.println(group.getGroupId());
-                for (String x : group.getGroupUserList()) {
-                    System.out.println(x);
-                }
-            }
+//            List<UserItemMsg> gg = gson.fromJson(asd, new TypeToken<List<UserItemMsg>>() {
+//            }.getType());
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -81,10 +81,10 @@ public class AtyLoginOrRegister extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login: {
-                String username = etLoginUsername.getText().toString();
+                String userId = etLoginUsername.getText().toString();
                 String password = etLoginPassword.getText().toString();
-                if (login(username, password)) {
-                    serverManager.setUsername(username);
+                if (login(userId, password)) {
+                    serverManager.setUserId(userId);
                     Intent intent = new Intent(this, AtyMain.class);
                     startActivity(intent);
                     finish();
@@ -123,7 +123,7 @@ public class AtyLoginOrRegister extends AppCompatActivity implements View.OnClic
         String msg=gson.toJson(loginMsg);
 
         //通过severMessage发生消息
-        serverManager.sendMessage(this, msg,"LOGIN");
+        serverManager.sendMessage(msg,"LOGIN");
 
         //从serverMessage获取返回消息
         String ack = serverManager.getMessage();
@@ -152,7 +152,7 @@ public class AtyLoginOrRegister extends AppCompatActivity implements View.OnClic
 
         RegisterMsg registerMsg = new RegisterMsg(username,password1);
         String msg = gson.toJson(registerMsg);
-        serverManager.sendMessage(this,msg,"REGISTER");
+        serverManager.sendMessage(msg,"REGISTER");
         String ack = serverManager.getMessage();
         if (ack == null) {
             Toast.makeText(AtyLoginOrRegister.this, "注册失败", Toast.LENGTH_SHORT).show();

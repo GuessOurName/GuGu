@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.List;
+
+import Util.GroupMsg;
 
 public class ServerManager extends Thread {
     //    192.168.43.58
@@ -18,12 +21,13 @@ public class ServerManager extends Thread {
 //    private Gson gson=new Gson();
     private static final String IP = "10.0.2.2";
     private Socket socket;
-    private String username;
+    private String userId;
     private int iconID;
     private String message = null;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private ReceiveChatMsg receiveChatMsg;
+    private List<GroupMsg> groupMsg;
     private static final ServerManager serverManager = new ServerManager();
 
     public static ServerManager getServerManager() {
@@ -85,15 +89,17 @@ public class ServerManager extends Thread {
         return;
     }
 
-    public void sendMessage(Context context, String msg, String msgType) {
+    public void sendMessage(String msg, String msgType) {
         try {
             while (socket == null) ;
             if (bufferedWriter != null) {
                 System.out.println("Send Message : [ " + msgType + " ] : " + msg);
                 bufferedWriter.write(msgType + "\n");
                 bufferedWriter.flush();
-                bufferedWriter.write(msg + "\n");
-                bufferedWriter.flush();
+                if(!msg.isEmpty()) {
+                    bufferedWriter.write(msg + "\n");
+                    bufferedWriter.flush();
+                }
                 bufferedWriter.write("-1\n");
                 bufferedWriter.flush();
             }
@@ -115,12 +121,17 @@ public class ServerManager extends Thread {
         this.message = message;
     }
 
-    public String getUsername() {
-        return username;
+    public List<GroupMsg> getGroupMsgList() {
+        return groupMsg;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public int getIconID() {

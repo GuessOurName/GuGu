@@ -19,6 +19,7 @@ import java.util.List;
 import Adapter.AdapterUserItem;
 import Server.ParaseData;
 import Server.ServerManager;
+import Util.GroupMsg;
 import Util.UserItemMsg;
 
 public class LayoutContacts extends Fragment {
@@ -27,7 +28,7 @@ public class LayoutContacts extends Fragment {
     private Context context;
 
     //Group群组列表
-    private List<UserItemMsg> groupMsgList;
+    private List<GroupMsg> groupMsgList;
     //Contacts联系人列表
     private List<UserItemMsg> contactMsgList;
     //Group群组缩放按钮
@@ -84,15 +85,18 @@ public class LayoutContacts extends Fragment {
     private void loadGroups() {
 
         ServerManager serverManager = ServerManager.getServerManager();
-        String username = serverManager.getUsername();
-        List<String> groStr = ParaseData.getGroupList(context, username);
-        for (String string : groStr) {
-            UserItemMsg msg = new UserItemMsg();
-            msg.setIconID(5);
-            msg.setState("1");
-            msg.setUsername(string);
-            groupMsgList.add(msg);
-        }
+        String userId = serverManager.getUserId();
+        serverManager.sendMessage("","GETGROUPLIST");
+        groupMsgList = serverManager.getGroupMsgList();
+//        List<String> groStr = ParaseData.getGroupList(context, userId);
+//        groupMsgList=serverManager.getGroupMsg();
+//        for (String string : groStr) {
+//            UserItemMsg msg = new UserItemMsg();
+//            msg.setIconID(5);
+//            msg.setState("1");
+//            msg.setUsername(string);
+//            groupMsgList.add(msg);
+//        }
     }
 
     //初始化联系人View
@@ -127,7 +131,7 @@ public class LayoutContacts extends Fragment {
     //使用ServerManager向服务端请求当前用户联系人信息存入contactMsgList
     private void loadFriends() {
         ServerManager serverManager = ServerManager.getServerManager();
-        String userName = serverManager.getUsername();
+        String userName = serverManager.getUserId();
         List<String> friStr = ParaseData.getFriendList(context, userName);
 
         for (String string : friStr) {

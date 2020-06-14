@@ -32,12 +32,12 @@ class ReceiveChatMsg {
             chatMsg.setContent(content);
             chatMsg.setChatObj(sendName);
             chatMsg.setUsername(ServerManager.getServerManager().getUserId());
-            chatMsg.setGroup(group);
+//            chatMsg.setGroup(group);
 
             chatMsg.setIconID(Integer.parseInt(avatarID));
 
-            AtyChatRoom.chatMsgList.add(chatMsg);
-            ChatMsg.chatMsgList.add(chatMsg);
+//            AtyChatRoom.chatMsgList.add(chatMsg);
+//            ChatMsg.chatMsgList.add(chatMsg);
         }
     }
 }

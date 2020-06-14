@@ -126,15 +126,16 @@ public class AtyChatRoom extends AppCompatActivity {
         String msg = gson.toJson(chatMsg);
         System.out.println(msg);
         serverManager.sendMessage(msg, "CHATMSG");
-        try {
-            Thread.sleep(500);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(500);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
         String ack = serverManager.getMessage();
         if (ack == null) {
             return false;
         }
+//        AtyChatRoom.chatMsgList.add(chatMsg);
         return true;
     }
 

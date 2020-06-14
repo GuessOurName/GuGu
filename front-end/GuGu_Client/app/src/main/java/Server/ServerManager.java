@@ -23,7 +23,7 @@ public class ServerManager extends Thread {
     private String message = null;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
-    private ReceiveChatMsg receiveChatMsg;
+//    private ReceiveChatMsg receiveChatMsg;
     private static final ServerManager serverManager = new ServerManager();
     private Gson gson = new Gson();
     public static ServerManager getServerManager() {
@@ -31,7 +31,7 @@ public class ServerManager extends Thread {
     }
 
     private ServerManager() {
-        receiveChatMsg = new ReceiveChatMsg();
+//        receiveChatMsg = new ReceiveChatMsg();
     }
 
     public void run() {

@@ -79,7 +79,7 @@ public class AdapterUserItem extends RecyclerView.Adapter<AdapterUserItem.BaseVi
 
                     //监听事件创建聊天室，传入对应聊天用户信息
                     Intent intent = new Intent(context, AtyChatRoom.class);
-                    intent.putExtra("Type",userItemMsg.getItemType() );
+                    intent.putExtra("Type",String.valueOf(userItemMsg.getItemType()));
                     if(userItemMsg.getItemType()==1){
                         intent.putExtra("Id",userItemMsg.getGroupId());
                     }
@@ -90,13 +90,13 @@ public class AdapterUserItem extends RecyclerView.Adapter<AdapterUserItem.BaseVi
 
                     //将建立聊天室的聊天加入Chat碎片中
                     for (UserItemMsg item : LayoutChats.userItemMsgList) {
-                        if(userItemMsg.getItemType()==1){
-                            if (item.getUserId().equals(userItemMsg.getGroupId())) {
+                        if(userItemMsg.getItemType()==1&&item.getItemType()==1){
+                            if (item.getGroupId().equals(userItemMsg.getGroupId())) {
                                 return;
                             }
                         }
-                        else if(userItemMsg.getItemType()==2){
-                            if(item.getGroupId().equals(userItemMsg.getUserId())){
+                        else if(userItemMsg.getItemType()==2&&item.getItemType()==2){
+                            if(item.getUserId().equals(userItemMsg.getUserId())){
                                 return;
                             }
                         }

@@ -219,56 +219,60 @@ public class ChatSocket extends Thread {
     }
 
     private void dealChatMsg(String msg) {
-        String chatObj = null;
-        String content = null;
-        String avatarID = null;
-        String msgType = null;
-        String p = "\\[CHATMSG\\]:\\[(.*), (.*), (.*), (.*)\\]";
-        Pattern pattern = Pattern.compile(p);
-        Matcher matcher = pattern.matcher(msg);
-        if (matcher.find()) {
-            chatObj = matcher.group(1);
-            content = matcher.group(2);
-            avatarID = matcher.group(3);
-            msgType = matcher.group(4);
-        } else {
-            return;
-        }
-        String out = null;
-        String sqlGroup = "SELECT * FROM Groups WHERE groupName = '" + chatObj + "';";
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlGroup);
-            // gruop chat
-            if (resultSet.next()) {
-                // find all group members to send msg
-                String sql = "SELECT groupMemberName FROM GROUPINFO WHERE groupName = '" + chatObj + "';";
-                resultSet = statement.executeQuery(sql);
-                while (resultSet.next()) {
-                    // if user is online , then send.
-                    for (SocketMsg SocketMsg : ChatManager.getChatManager().socketList) {
-                        if (SocketMsg.getUsername().equals(resultSet.getString(1)) && !SocketMsg.getUsername().equals(userId)) {
-                            out = "[GETCHATMSG]:[" + userId + ", " + content + ", " + avatarID + ", Text, " + chatObj + "]";
-//                            SocketMsg.getChatSocket().sendMsg(out);
-                        }
-                    }
-                }
-                // private chat
-            } else {
-                for (SocketMsg socketManager : ChatManager.getChatManager().socketList) {
-                    if (socketManager.getUsername().equals(chatObj)) {
-                        out = "[GETCHATMSG]:[" + userId + ", " + content + ", " + avatarID + ", Text,  ]";
-//                        socketManager.getChatSocket().sendMsg(out);
-                    }
-                }
-            }
-            out = "[ACKCHATMSG]:[1]";
-//            sendMsg(out);
-        } catch (SQLException e) {
-            out = "[ACKCHATMSG]:[0]";
-//            sendMsg(out);
+            Thread.sleep(500);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        ChatMsg chatMsg = gson.fromJson(msg, ChatMsg.class);
+        String target = chatMsg.getChatObj();
+        if (chatMsg.getIsGroup() == 1) {
+
+        } else {
+            chatMsg.setMyInfo(false);
+            String transmit = gson.toJson(chatMsg);
+            for (SocketMsg SocketMsg : ChatManager.getChatManager().socketList) {
+                if (SocketMsg.getUsername().equals(target)) {
+                    SocketMsg.getChatSocket().sendMsg("CHATMSG", transmit);
+                    break;
+                }
+            }
+        }
+
+//        String sqlGroup = "SELECT * FROM Groups WHERE groupName = '" + chatObj + "';";
+//        try {
+//            Statement statement = connection.createStatement();
+//            ResultSet resultSet = statement.executeQuery(sqlGroup);
+//            // gruop chat
+//            if (resultSet.next()) {
+//                // find all group members to send msg
+//                String sql = "SELECT groupMemberName FROM GROUPINFO WHERE groupName = '" + chatObj + "';";
+//                resultSet = statement.executeQuery(sql);
+//                while (resultSet.next()) {
+//                    // if user is online , then send.
+//                    for (SocketMsg SocketMsg : ChatManager.getChatManager().socketList) {
+//                        if (SocketMsg.getUsername().equals(resultSet.getString(1)) && !SocketMsg.getUsername().equals(userId)) {
+//                            out = "[GETCHATMSG]:[" + userId + ", " + content + ", " + avatarID + ", Text, " + chatObj + "]";
+////                            SocketMsg.getChatSocket().sendMsg(out);
+//                        }
+//                    }
+//                }
+//                // private chat
+//            } else {
+//                for (SocketMsg socketManager : ChatManager.getChatManager().socketList) {
+//                    if (socketManager.getUsername().equals(chatObj)) {
+//                        out = "[GETCHATMSG]:[" + userId + ", " + content + ", " + avatarID + ", Text,  ]";
+////                        socketManager.getChatSocket().sendMsg(out);
+//                    }
+//                }
+//            }
+//            out = "[ACKCHATMSG]:[1]";
+////            sendMsg(out);
+//        } catch (SQLException e) {
+//            out = "[ACKCHATMSG]:[0]";
+////            sendMsg(out);
+//            e.printStackTrace();
+//        }
     }
 
     private void dealState(String msg) {
@@ -490,7 +494,7 @@ public class ChatSocket extends Thread {
             ResultSet resultSet = statement.executeQuery(sqlPassword);
             // 密码匹配
             if (resultSet.next() && iPassword.equals(resultSet.getString("Pwd"))) {
-                sendMsg("ACKLOGIN","1");
+                sendMsg("ACKLOGIN", "1");
                 this.userId = iuserId;
                 MainWindow.getMainWindow().setShowMsg(this.userId + " login in!");
                 MainWindow.getMainWindow().addOnlineUsers(this.userId);

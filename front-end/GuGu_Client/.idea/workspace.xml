@@ -12,10 +12,6 @@
   <component name="ChangeListManager">
     <list default="true" id="02c684c5-700a-48a0-af9f-6a41755d7351" name="Default Changelist" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/Activity/AtyLoginOrRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/Activity/AtyLoginOrRegister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/Server/ServerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/Server/ServerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/View/LayoutContacts.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/View/LayoutContacts.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,17 +132,36 @@
       <option name="presentableId" value="Default" />
       <updated>1591963170350</updated>
     </task>
+    <task id="LOCAL-00001" summary="update">
+      <created>1592125379843</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1592125379843</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update">
+      <created>1592125423726</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1592125423726</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1067" y="350" key="#com.intellij.ide.util.MemberChooser" timestamp="1592124525251">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="1067" y="350" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1592124525251" />
-    <state x="535" y="132" key="CommitChangelistDialog2" timestamp="1592123674938">
+    <state x="535" y="132" key="CommitChangelistDialog2" timestamp="1592125422896">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="535" y="132" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1592123674938" />
+    <state x="535" y="132" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1592125422896" />
     <state width="1860" height="292" key="GridCell.Tab.0.bottom" timestamp="1592123060549">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

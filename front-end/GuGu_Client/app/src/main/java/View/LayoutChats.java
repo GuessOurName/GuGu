@@ -24,9 +24,9 @@ import Util.UserItemMsg;
 
 public class LayoutChats extends Fragment {
 
+    public static List<UserItemMsg> userItemMsgList;
     private View rootView;
     private RecyclerView recyclerView;
-    public static List<UserItemMsg> userItemMsgList;
     private Context context;
     private AdapterUserItem adapterUserItem;
 

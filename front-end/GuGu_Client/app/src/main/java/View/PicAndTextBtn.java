@@ -15,16 +15,16 @@ import androidx.annotation.Nullable;
 
 import com.example.gugu_client.R;
 
+
+//自定义控件PicAndTextBtn，控件属性格式在/values/attx.xml中
+
 public class PicAndTextBtn extends LinearLayout {
 
     private Context context;
-
     private ImageView imageView;
     private TextView textView;
-
     private Drawable image;
     private Drawable imageBackground;
-
     private String text;
     private float textSize;
     private int textColor;

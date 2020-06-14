@@ -1,7 +1,9 @@
 package Activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,26 +36,23 @@ public class AtyMain extends AppCompatActivity {
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.aty_main);
-
         initViews();
     }
 
+
     private void initViews() {
+        titleBar = (TitleBar) findViewById(R.id.tb_main);
         viewPager = (ViewPager) findViewById(R.id.vp_main);
         tabLayout = (TabLayout) findViewById(R.id.tl_main);
 
+        //对主界面下方Tab添加碎片
         tabList = new ArrayList<>();
-
         AdapterMainViewPager adapter = new AdapterMainViewPager(getSupportFragmentManager());
-
         adapter.addFragment(new LayoutChats());
         adapter.addFragment(new LayoutContacts());
         adapter.addFragment(new LayoutMoments());
-
         viewPager.setAdapter(adapter);
-
         tabLayout.setupWithViewPager(viewPager);
-
         tabList.add(tabLayout.getTabAt(0));
         tabList.add(tabLayout.getTabAt(1));
         tabList.add(tabLayout.getTabAt(2));
@@ -61,6 +60,7 @@ public class AtyMain extends AppCompatActivity {
         tabList.get(1).setIcon(R.drawable.contactsunselected).setText("Contacts");
         tabList.get(2).setIcon(R.drawable.momentunselected).setText("Moments");
 
+        //设置主界面下方Tab选择事件
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -70,7 +70,6 @@ public class AtyMain extends AppCompatActivity {
                         ContextCompat.getColor(AtyMain.this, R.color.colorBlue)
                 );
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 tabList.get(tab.getPosition()).setIcon(ImageManager.imageID[tab.getPosition()]);
@@ -79,6 +78,19 @@ public class AtyMain extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+
+        //设置主界面Title左右按钮监听事件
+        titleBar.setTitleBarClickListetner(new TitleBar.titleBarClickListener() {
+            @Override
+            public void leftButtonClick() {
+                Toast.makeText(AtyMain.this, "Left Button Success", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void rightButtonClick() {
+                Toast.makeText(AtyMain.this, "Right Button Success", Toast.LENGTH_SHORT).show();
             }
         });
     }

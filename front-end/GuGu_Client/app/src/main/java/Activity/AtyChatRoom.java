@@ -96,7 +96,7 @@ public class AtyChatRoom extends AppCompatActivity {
     private boolean sendToChatObj(String content) {
         String msg = "[CHATMSG]:[" + chatObj + ", " + content + ", " + ServerManager.getServerManager().getIconID() +", Text]";
         ServerManager serverManager = ServerManager.getServerManager();
-        serverManager.sendMessage(this, msg);
+        serverManager.sendMessage(this, msg,"xxx");
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {

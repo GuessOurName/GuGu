@@ -1383,6 +1383,7 @@ id tag_unhandled_key_event_manager
 id tag_unhandled_key_listeners
 id tb_chat_room
 id tb_dress_up
+id tb_main
 id tb_profile
 id tb_setting
 id text
@@ -1397,7 +1398,6 @@ id textinput_error
 id textinput_helper_text
 id time
 id title
-id titleBar
 id titleDividerNoCustom
 id title_template
 id tl_main

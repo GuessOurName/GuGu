@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBManager {
-    // 单例
+
     private static final DBManager dbManager = new DBManager();
     private static Connection connection = null;
     private static final String url = "jdbc:mysql://175.24.74.92:3306/Test?"

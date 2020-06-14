@@ -11,11 +11,10 @@ public class ServerListener extends Thread{
     @Override
     public void run() {
         try {
-            // 监听port端口，请求队列长度为27
             serverSocket = new ServerSocket(27777, 27);
             while (true) {
-                // 从队首获取一个socket
                 Socket socket = serverSocket.accept();
+//                System.out.println("haha");
                 ChatSocket chatSocket = new ChatSocket(socket);
                 chatSocket.start();
             }

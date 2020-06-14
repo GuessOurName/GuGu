@@ -1,6 +1,7 @@
 package Main;
 
 import DB.DBManager;
+import Util.LoginMsg;
 import View.MainWindow;
 
 import java.io.*;
@@ -9,8 +10,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import com.google.gson.Gson;
+import Util.LoginMsg;
+import com.google.gson.reflect.TypeToken;
 
 public class ChatSocket extends Thread{
 
@@ -21,6 +26,8 @@ public class ChatSocket extends Thread{
     private BufferedWriter bufferedWriter;
     private Connection connection = DBManager.getDBManager().getConnection();
     private SocketMsg socketMsg;
+    private Gson gson=new Gson();
+    private LoginMsg loginMsg;
 
     public ChatSocket(Socket s) {
         this.socket = s;
@@ -36,18 +43,23 @@ public class ChatSocket extends Thread{
     @Override
     public void run() {
         try {
-            // 读取Socket内容
             String line = null;
-            System.out.println("receive success");
+            String receiveMsgType=null;
+            String msg=null;
             while ((line = bufferedReader.readLine()) != null) {
-                System.out.println(line.toString());
+                System.out.println("The Server Receive line : "+line);
                 if (!line.equals("-1")) {
-                    message += line;
+                    if(receiveMsgType==null){
+                        receiveMsgType=line;
+                    }
+                    else{
+                        msg=line;
+                    }
                 } else {
-                    delMessage(message);
-                    System.out.println("receive : " + message);
-                    line = null;
-                    message = null;
+
+                    delMessage(receiveMsgType,msg);
+                    receiveMsgType=null;
+                    msg=null;
                 }
             }
         } catch (IOException e) {
@@ -55,7 +67,6 @@ public class ChatSocket extends Thread{
             e.printStackTrace();
         } finally {
             try {
-                // 用户离线
                 MainWindow.getMainWindow().setShowMsg(this.username + " login out !");
                 MainWindow.getMainWindow().removeOfflineUsers(this.username);
                 ChatManager.getChatManager().remove(socketMsg);
@@ -68,10 +79,9 @@ public class ChatSocket extends Thread{
         }
     }
 
-    public void delMessage(String msg) {
-        if (msg != null) {
-            String action = getAction(msg);
-            switch(action) {
+    public void delMessage(String receiveMsgType,String msg) {
+        if (receiveMsgType != null) {
+            switch(receiveMsgType) {
                 case "LOGIN": { dealLogin(msg); break; }
                 case "REGISTER": { dealRegister(msg); break; }
                 case "DRESSUP": { dealDressUp(msg); break; }
@@ -98,9 +108,9 @@ public class ChatSocket extends Thread{
             while (socket == null) ;
             if (bufferedWriter != null) {
                 System.out.println("send :" + msg);
-                bufferedWriter.write(msg + "\n");
+                bufferedWriter.write(msg+"\n");
                 bufferedWriter.flush();
-                bufferedWriter.write("-1\n");
+                bufferedWriter.write("-1"+"\n");
                 bufferedWriter.flush();
             }
         } catch (IOException e) {
@@ -314,17 +324,44 @@ public class ChatSocket extends Thread{
     private void dealRegister(String msg) {
     }
 
-    private void dealLogin(String msg) {
-        String iusername = null;
-        String iPassword = null;
+//    private void dealLogin(String msg) {
+//        String iusername = null;
+//        String iPassword = null;
+//
+//        String p = "\\[LOGIN\\]:\\[(.*), (.*)\\]";
+//        Pattern pattern = Pattern.compile(p);
+//        Matcher matcher = pattern.matcher(msg);
+//        if (matcher.find()) {
+//            iusername = matcher.group(1);
+//            iPassword = matcher.group(2);
+//        }
+//        System.out.println(iusername);
+//        System.out.println(iPassword);
+//        String sql = "SELECT password FROM Users WHERE username = '" + iusername + "';";
+//        try {
+//            Statement statement = connection.createStatement();
+//            ResultSet resultSet = statement.executeQuery(sql);
+//            if (resultSet.next() && iPassword.equals(resultSet.getString(1)) ) {
+//                sendMsg("[ACKLOGIN]:[1]");
+//                this.username = iusername;
+//                MainWindow.getMainWindow().setShowMsg(this.username + " login in!");
+//                MainWindow.getMainWindow().addOnlineUsers(this.username);
+//                socketMsg = new SocketMsg(this,  this.username);
+//                ChatManager.getChatManager().add(socketMsg);
+//                return ;
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        sendMsg("[ACKLOGIN]:[0]");
+//    }
 
-        String p = "\\[LOGIN\\]:\\[(.*), (.*)\\]";
-        Pattern pattern = Pattern.compile(p);
-        Matcher matcher = pattern.matcher(msg);
-        if (matcher.find()) {
-            iusername = matcher.group(1);
-            iPassword = matcher.group(2);
-        }
+    private void dealLogin(String msg) {
+        loginMsg=gson.fromJson(msg,LoginMsg.class);
+        System.out.println("Deal Login Message : "+loginMsg.toString());
+        String iusername = loginMsg.getUsername();
+        String iPassword = loginMsg.getPassword();
+
         System.out.println(iusername);
         System.out.println(iPassword);
         String sql = "SELECT password FROM Users WHERE username = '" + iusername + "';";
@@ -332,7 +369,7 @@ public class ChatSocket extends Thread{
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             if (resultSet.next() && iPassword.equals(resultSet.getString(1)) ) {
-                sendMsg("[ACKLOGIN]:[1]");
+                sendMsg("ACKLOGIN");
                 this.username = iusername;
                 MainWindow.getMainWindow().setShowMsg(this.username + " login in!");
                 MainWindow.getMainWindow().addOnlineUsers(this.username);

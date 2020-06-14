@@ -3,6 +3,8 @@ package Server;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -12,7 +14,9 @@ import java.net.Socket;
 
 public class ServerManager extends Thread {
 //    192.168.43.58
-    private static final String IP = "192.168.43.58";
+//    10.85.15.88
+//    private Gson gson=new Gson();
+    private static final String IP = "192.168.137.109";
     private Socket socket;
     private String username;
     private int iconID;
@@ -36,23 +40,29 @@ public class ServerManager extends Thread {
             bufferedReader =  new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
             bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"));
 
-            String m = null;
+            String msg=null;
+            String receiveMsgType=null;
             String line;
             while ((line = bufferedReader.readLine()) != null) {
+                System.out.println("The Client Receive line : "+line);
                 if (!line.equals("-1")) {
-                    m += line;
-                } else {
-                    Log.d("TAG", "receive : " + m);
-                    if (ParaseData.getAction(m).equals("GETCHATMSG")) {
-                        receiveChatMsg.delChatMsg(m);
-                    } else {
-                        message = m;
+                    if(receiveMsgType==null){
+                        receiveMsgType=line;
                     }
-                    m = null;
+                    else{
+                        msg=line;
+                    }
+                } else {
+                    dealMsg(receiveMsgType,msg);
+                    receiveMsgType=null;
+                    msg=null;
+                    line=null;
                 }
             }
-        } catch (IOException e) {
 
+
+        } catch (IOException e) {
+            System.out.println("IP Adress Error ! ! !");
             e.printStackTrace();
         } finally {
             try {
@@ -65,11 +75,20 @@ public class ServerManager extends Thread {
         }
     }
 
-    public void sendMessage(Context context, String msg) {
+    public void dealMsg(String receiveMsgType,String msg){
+        if(receiveMsgType.equals("ACKLOGIN")){
+            this.message="SUCCESS";
+        }
+        return;
+    }
+
+    public void sendMessage(Context context, String msg,String msgType) {
         try {
             while (socket == null) ;
             if (bufferedWriter != null) {
-//                Log.d("TAG", "send : " + msg);
+                System.out.println("Send Message : [ "+msgType +" ] : " +msg);
+                bufferedWriter.write(msgType+"\n");
+                bufferedWriter.flush();
                 bufferedWriter.write(msg + "\n");
                 bufferedWriter.flush();
                 bufferedWriter.write("-1\n");
@@ -81,15 +100,10 @@ public class ServerManager extends Thread {
     }
 
     public String getMessage() {
-        for (int i = 0; i < 5; i++) {
-            if (message != null) {
-                break;
-            }
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         return message;
     }

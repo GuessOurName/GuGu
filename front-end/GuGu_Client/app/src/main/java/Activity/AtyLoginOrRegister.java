@@ -14,11 +14,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gugu_client.R;
+import com.google.gson.Gson;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Server.ServerManager;
+import Util.LoginMsg;
 
 public class AtyLoginOrRegister extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,12 +29,12 @@ public class AtyLoginOrRegister extends AppCompatActivity implements View.OnClic
     private Button btnLogin;
     private EditText etLoginUsername;
     private EditText etLoginPassword;
-
     private Button btnRegister;
     private EditText etRegisterUsername;
     private EditText etRegisterPassword;
     private EditText etInsurePassword;
 
+    private Gson gson = new Gson();
     private ServerManager serverManager = ServerManager.getServerManager();
 
     @Override
@@ -45,17 +47,15 @@ public class AtyLoginOrRegister extends AppCompatActivity implements View.OnClic
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
         initViews();
     }
 
+    //layout布局初始化
     private void initViews() {
         tabHost = (TabHost) findViewById(R.id.tabHost);
-
         btnLogin = (Button) findViewById(R.id.btn_login);
         etLoginUsername = (EditText) findViewById(R.id.et_login_username);
         etLoginPassword = (EditText) findViewById(R.id.et_login_password);
-
         btnRegister = (Button) findViewById(R.id.btn_register);
         etRegisterUsername = (EditText) findViewById(R.id.et_register_username);
         etRegisterPassword = (EditText) findViewById(R.id.et_register_password);
@@ -64,13 +64,11 @@ public class AtyLoginOrRegister extends AppCompatActivity implements View.OnClic
         tabHost.setup();
         tabHost.addTab(tabHost.newTabSpec("Login").setIndicator("Login").setContent(R.id.layout_login));
         tabHost.addTab(tabHost.newTabSpec("Register").setIndicator("Register").setContent(R.id.layout_register));
-
         for (int i = 0; i < 2; i++) {
             TextView tv = ((TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title));
             tv.setAllCaps(false);
             tv.setTextSize(16);
         }
-
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
         serverManager.start();
@@ -104,24 +102,30 @@ public class AtyLoginOrRegister extends AppCompatActivity implements View.OnClic
         }
     }
 
+
     private boolean login(String username, String password) {
-        // check username and password whether legal
-        if (username == null || username.length() > 10 || password.length() > 20) {
+        //发送数据是否符合格式
+        if (username == null || password == null || username.length() > 10 || password.length() > 20) {
             return false;
         }
-        // send msg to servers
-        String msg = "[LOGIN]:[" + username + ", " + password + "]";
-        serverManager.sendMessage(this, msg);
-        // get msg from servers return
+
+        //创建登录消息
+        LoginMsg loginMsg=new LoginMsg(username,password);
+
+        //序列化为json字符串
+        String msg=gson.toJson(loginMsg);
+
+        //通过severMessage发生消息
+        serverManager.sendMessage(this, msg,"LOGIN");
+
+        //从serverMessage获取返回消息
         String ack = serverManager.getMessage();
-        // deal msg
+
+        // 处理返回消息
         if (ack == null) {
             return false;
         }
         serverManager.setMessage(null);
-        String p = "\\[ACKLOGIN\\]:\\[(.*)\\]";
-        Pattern pattern = Pattern.compile(p);
-        Matcher matcher = pattern.matcher(ack);
-        return matcher.find() && matcher.group(1).equals("1");
+        return ack.equals("SUCCESS");
     }
 }

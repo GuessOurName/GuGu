@@ -25,11 +25,18 @@ public class LayoutContacts extends Fragment {
 
     private View rootView;
     private Context context;
+
+    //Group群组列表
     private List<UserItemMsg> groupMsgList;
+    //Contacts联系人列表
     private List<UserItemMsg> contactMsgList;
+    //Group群组缩放按钮
     private PicAndTextBtn patbBarGroup;
+    //Conctacts联系人缩放按钮
     private PicAndTextBtn patbBarContact;
+    //Group群组列表Recycler视图
     private RecyclerView rvGroup;
+    //Contacts联系人列表Recycler视图
     private RecyclerView rvContact;
 
     @Nullable
@@ -42,18 +49,23 @@ public class LayoutContacts extends Fragment {
         return rootView;
     }
 
+
+    //初始化群组View
     private void initGroupViews() {
+
         patbBarGroup = (PicAndTextBtn) rootView.findViewById(R.id.patb_bar_groups);
         rvGroup = (RecyclerView) rootView.findViewById(R.id.rv_list_groups);
-
         groupMsgList = new ArrayList<>();
 
+        //请求加载群组信息
         loadGroups();
 
+        //使用AdapterUserItem适配器将信息显示
         AdapterUserItem adapterGroup = new AdapterUserItem(context, groupMsgList);
         rvGroup.setLayoutManager(new LinearLayoutManager(context));
         rvGroup.setAdapter(adapterGroup);
 
+        //Group群组缩放按钮监听设置
         patbBarGroup.setOnClickListener(new PicAndTextBtn.picAndTextBtnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,10 +80,11 @@ public class LayoutContacts extends Fragment {
         });
     }
 
+    //使用ServerManager向服务端请求当前用户群组信息存入groupMsgList
     private void loadGroups() {
+
         ServerManager serverManager = ServerManager.getServerManager();
         String username = serverManager.getUsername();
-
         List<String> groStr = ParaseData.getGroupList(context, username);
         for (String string : groStr) {
             UserItemMsg msg = new UserItemMsg();
@@ -82,18 +95,21 @@ public class LayoutContacts extends Fragment {
         }
     }
 
+    //初始化联系人View
     private void initContactViews() {
         patbBarContact = (PicAndTextBtn) rootView.findViewById(R.id.patb_bar__contacts);
         rvContact = (RecyclerView) rootView.findViewById(R.id.rv_list_contacts);
-
         contactMsgList = new ArrayList<>();
 
+        //请求加载群组信息
         loadFriends();
 
+        //使用AdapterUserItem适配器将信息显示
         AdapterUserItem adapterContact = new AdapterUserItem(context, contactMsgList);
         rvContact.setLayoutManager(new LinearLayoutManager(context));
         rvContact.setAdapter(adapterContact);
 
+        //Contacts联系人缩放按钮监听设置
         patbBarContact.setOnClickListener(new PicAndTextBtn.picAndTextBtnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,11 +124,12 @@ public class LayoutContacts extends Fragment {
         });
     }
 
+    //使用ServerManager向服务端请求当前用户联系人信息存入contactMsgList
     private void loadFriends() {
         ServerManager serverManager = ServerManager.getServerManager();
         String userName = serverManager.getUsername();
-
         List<String> friStr = ParaseData.getFriendList(context, userName);
+
         for (String string : friStr) {
             UserItemMsg msg = new UserItemMsg();
             msg.setUsername(string);

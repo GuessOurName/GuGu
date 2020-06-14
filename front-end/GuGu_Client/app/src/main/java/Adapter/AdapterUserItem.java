@@ -29,11 +29,13 @@ public class AdapterUserItem extends RecyclerView.Adapter<AdapterUserItem.BaseVi
         this.userItemMsgList = userItemMsgList;
     }
 
+    //设置layout样式
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new BaseViewHolder(LayoutInflater.from(context).inflate(R.layout.item_user, parent, false));
     }
 
+    //设置当前item项数据为传入userItemMsgList中的数据
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         holder.ivAvatar.setImageResource(ImageManager.imagesAvatar[userItemMsgList.get(position).getIconID()]);
@@ -47,6 +49,8 @@ public class AdapterUserItem extends RecyclerView.Adapter<AdapterUserItem.BaseVi
         return (userItemMsgList == null ? 0 : userItemMsgList.size());
     }
 
+
+    //内部类BaseViewHolder与layout控件对应，并设置监听事件
     class BaseViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView ivAvatar;
@@ -59,18 +63,21 @@ public class AdapterUserItem extends RecyclerView.Adapter<AdapterUserItem.BaseVi
             tvUsername = (TextView) itemView.findViewById(R.id.tv_item_username);
             tvSign = (TextView) itemView.findViewById(R.id.tv_item_sign);
 
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    //监听事件创建聊天室，传入对应聊天用户信息
                     Intent intent = new Intent(context, AtyChatRoom.class);
                     intent.putExtra("username", tvUsername.getText().toString());
                     context.startActivity(intent);
 
+                    //将建立聊天室的聊天加入Chat碎片中
                     UserItemMsg userItemMsg = new UserItemMsg();
                     userItemMsg.setSign(tvSign.getText().toString());
                     userItemMsg.setIconID((Integer) ivAvatar.getTag());
                     userItemMsg.setUsername(tvUsername.getText().toString());
-
                     for (UserItemMsg item : LayoutChats.userItemMsgList) {
                         if (item.getUsername().equals(userItemMsg.getUsername())) {
                             return;

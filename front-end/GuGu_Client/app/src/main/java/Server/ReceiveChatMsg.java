@@ -31,7 +31,7 @@ class ReceiveChatMsg {
             chatMsg.setMyInfo(false);
             chatMsg.setContent(content);
             chatMsg.setChatObj(sendName);
-            chatMsg.setUsername(ServerManager.getServerManager().getUsername());
+            chatMsg.setUsername(ServerManager.getServerManager().getUserId());
             chatMsg.setGroup(group);
 
             chatMsg.setIconID(Integer.parseInt(avatarID));

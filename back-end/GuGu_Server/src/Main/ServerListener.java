@@ -14,7 +14,6 @@ public class ServerListener extends Thread{
             serverSocket = new ServerSocket(27777, 27);
             while (true) {
                 Socket socket = serverSocket.accept();
-//                System.out.println("haha");
                 ChatSocket chatSocket = new ChatSocket(socket);
                 chatSocket.start();
             }

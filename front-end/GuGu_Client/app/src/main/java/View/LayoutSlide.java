@@ -99,7 +99,7 @@ public class LayoutSlide extends FrameLayout {
 
     private void loadData() {
         ServerManager serverManager = ServerManager.getServerManager();
-        String username = serverManager.getUsername();
+        String username = serverManager.getUserId();
 
         // load dressup
         String[] dreStr = ParaseData.getDressUp(null, username);

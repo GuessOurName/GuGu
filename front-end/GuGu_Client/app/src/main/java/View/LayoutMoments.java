@@ -55,7 +55,7 @@ public class LayoutMoments extends Fragment {
             @Override
             public void onClick(View v) {
                 MomentMsg momentMsg = new MomentMsg();
-                momentMsg.setUsername(ServerManager.getServerManager().getUsername());
+                momentMsg.setUsername(ServerManager.getServerManager().getUserId());
                 momentMsg.setIconID(ServerManager.getServerManager().getIconID());
                 momentMsg.setMoment(tvNewMoment.getText().toString());
                 momentMsg.setGood(R.drawable.ungood);

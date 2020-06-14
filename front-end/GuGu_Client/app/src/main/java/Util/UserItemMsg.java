@@ -5,34 +5,57 @@ import java.util.List;
 
 public class UserItemMsg {
 
-    private int iconID;
-    private String username;
+    private String userId;
+    private String userName;
+    private String avatarPath;
     private String sign;
-    private String state;
+
+
+    private String groupId;
+    private String groupName;
+    private String createrId;
+
+    private int itemType;   //1为group，2为contact
     public static List<UserItemMsg> userItemMsgList = new ArrayList<>();
 
-    public String getState() {
-        return state;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public int getIconID() {
-        return iconID;
+    public String getGroupId() {
+        return groupId;
     }
 
-    public void setIconID(int iconID) {
-        this.iconID = iconID;
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getCreaterId() {
+        return createrId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCreaterId(String createrId) {
+        this.createrId = createrId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 
     public String getSign() {
@@ -42,5 +65,23 @@ public class UserItemMsg {
     public void setSign(String sign) {
         this.sign = sign;
     }
+
+    public int getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
+    }
+
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
 }
 

@@ -1,16 +1,17 @@
 package Main;
 
 import DB.DBManager;
-import Util.LoginMsg;
-import Util.RegisterMsg;
+import Util.*;
 import View.MainWindow;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,10 +21,9 @@ import Util.LoginMsg;
 import com.google.gson.reflect.TypeToken;
 
 
-
 public class ChatSocket extends Thread {
 
-    private String username;
+    private String userId = "12";
     private Socket socket;
     private String message = null;
     private BufferedReader bufferedReader;
@@ -32,6 +32,11 @@ public class ChatSocket extends Thread {
     private SocketMsg socketMsg;
     private Gson gson = new Gson();
     private LoginMsg loginMsg;
+    private List<Group> groupList = new ArrayList<>();
+
+
+    public ChatSocket() {
+    }
 
     public ChatSocket(Socket s) {
         this.socket = s;
@@ -69,8 +74,8 @@ public class ChatSocket extends Thread {
             e.printStackTrace();
         } finally {
             try {
-                MainWindow.getMainWindow().setShowMsg(this.username + " login out !");
-                MainWindow.getMainWindow().removeOfflineUsers(this.username);
+                MainWindow.getMainWindow().setShowMsg(this.userId + " login out !");
+                MainWindow.getMainWindow().removeOfflineUsers(this.userId);
                 ChatManager.getChatManager().remove(socketMsg);
                 bufferedWriter.close();
                 bufferedReader.close();
@@ -113,7 +118,9 @@ public class ChatSocket extends Thread {
                     break;
                 }
                 case "GETGROUPLIST": {
+                    System.out.println("Deal with grouplist!");
                     dealGetGroupList(msg);
+                    System.out.println("Deal with grouplist done!");
                     break;
                 }
                 case "GETFRIENDPROFILE": {
@@ -234,8 +241,8 @@ public class ChatSocket extends Thread {
                 while (resultSet.next()) {
                     // if user is online , then send.
                     for (SocketMsg SocketMsg : ChatManager.getChatManager().socketList) {
-                        if (SocketMsg.getUsername().equals(resultSet.getString(1)) && !SocketMsg.getUsername().equals(username)) {
-                            out = "[GETCHATMSG]:[" + username + ", " + content + ", " + avatarID + ", Text, " + chatObj + "]";
+                        if (SocketMsg.getUsername().equals(resultSet.getString(1)) && !SocketMsg.getUsername().equals(userId)) {
+                            out = "[GETCHATMSG]:[" + userId + ", " + content + ", " + avatarID + ", Text, " + chatObj + "]";
                             SocketMsg.getChatSocket().sendMsg(out);
                         }
                     }
@@ -244,7 +251,7 @@ public class ChatSocket extends Thread {
             } else {
                 for (SocketMsg socketManager : ChatManager.getChatManager().socketList) {
                     if (socketManager.getUsername().equals(chatObj)) {
-                        out = "[GETCHATMSG]:[" + username + ", " + content + ", " + avatarID + ", Text,  ]";
+                        out = "[GETCHATMSG]:[" + userId + ", " + content + ", " + avatarID + ", Text,  ]";
                         socketManager.getChatSocket().sendMsg(out);
                     }
                 }
@@ -286,16 +293,54 @@ public class ChatSocket extends Thread {
         }
     }
 
-    private void dealGetGroupList(String msg) {
-        String out = null;
-        String sql = "SELECT groupName FROM GroupInfo WHERE groupMemberName = '" + username + "';";
+    public void dealGetGroupList(String msg) {
+//        String sql = "SELECT groupName FROM GroupInfo WHERE groupMemberName = '" + userId + "';";
+        String sqlGroupList = "SELECT GroupId FROM GroupInfo WHERE UserId = " + userId + ";\n";
+        List<Group> groupList = new ArrayList<Group>();
         try {
+            // 一个st只能对应一个rs
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = statement.executeQuery(sqlGroupList);
             while (resultSet.next()) {
-                out += "[ACKGETGROUPLIST]:[" + resultSet.getString(1) + "] ";
+                Group group = new Group();
+                group.setItemType(1);
+                int groupId = resultSet.getInt("GroupId");
+                group.setGroupId(groupId);
+                // 查询群名称和创建者
+                String sqlGroups = "SELECT GroupName,CreaterId FROM Groups WHERE GroupId =" + groupId + ";\n";
+                Statement statement1 = connection.createStatement();
+                ResultSet resultSet1 = statement1.executeQuery(sqlGroups);
+                if (resultSet1.next()) {
+                    String groupName = resultSet1.getString("GroupName");
+                    int createrId = resultSet1.getInt("CreaterId");
+                    group.setCreaterId(createrId);
+                    group.setGroupName(groupName);
+                }
+                // 查询群成员
+                List<String> userList = new ArrayList<String>();
+                String sqlGroupUser = "SELECT UserId FROM GroupInfo WHERE GroupId =" + groupId + ";\n";
+                Statement statement2 = connection.createStatement();
+                ResultSet resultSet2 = statement2.executeQuery(sqlGroupUser);
+                while (resultSet2.next()) {
+                    int groupUserId = resultSet2.getInt("UserId");
+                    userList.add(String.valueOf(groupUserId));
+                }
+                group.setGroupUserList(userList);
+                groupList.add(group);
             }
-            sendMsg(out);
+            resultSet.close();
+            String asd = gson.toJson(groupList);
+            System.out.println(asd);
+//            GroupList g = gson.fromJson(msg,GroupList.class);
+            List<Group> gg = gson.fromJson(asd, new TypeToken<List<Group>>() {
+            }.getType());
+            for (Group group : gg) {
+                System.out.println(group.getGroupName());
+                System.out.println(group.getGroupId());
+                for (String x : group.getGroupUserList()) {
+                    System.out.println(x);
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -303,7 +348,7 @@ public class ChatSocket extends Thread {
 
     private void dealGetFriendList(String msg) {
         String out = null;
-        String sql = "SELECT friendsName FROM Friends WHERE username = '" + username + "';";
+        String sql = "SELECT friendsName FROM Friends WHERE username = " + userId + ";";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -318,7 +363,7 @@ public class ChatSocket extends Thread {
 
     private void dealGetProfile(String msg) {
         String out = null;
-        String sql = "SELECT sign FROM UserInfo WHERE username = '" + username + "';";
+        String sql = "SELECT sign FROM UserInfo WHERE username = '" + userId + "';";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -336,7 +381,7 @@ public class ChatSocket extends Thread {
 
     private void dealGetDressUp(String msg) {
         String out = null;
-        String sql = "SELECT avatar, background FROM UserInfo WHERE username = '" + username + "';";
+        String sql = "SELECT avatar, background FROM UserInfo WHERE username = '" + userId + "';";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -360,7 +405,7 @@ public class ChatSocket extends Thread {
             backgroundID = matcher.group(2);
         }
         System.out.println(acatarID + "   " + backgroundID);
-        String sql = "UPDATE UserInfo SET avatar =  " + acatarID + ", background = " + backgroundID + " WHERE username = '" + username + "'";
+        String sql = "UPDATE UserInfo SET avatar =  " + acatarID + ", background = " + backgroundID + " WHERE username = '" + userId + "'";
         try {
             Statement statement = connection.createStatement();
             if (statement.executeUpdate(sql) > 0) {
@@ -426,10 +471,10 @@ public class ChatSocket extends Thread {
             // 密码匹配
             if (resultSet.next() && iPassword.equals(resultSet.getString("Pwd"))) {
                 sendMsg("ACKLOGIN");
-                this.username = iuserId;
-                MainWindow.getMainWindow().setShowMsg(this.username + " login in!");
-                MainWindow.getMainWindow().addOnlineUsers(this.username);
-                socketMsg = new SocketMsg(this, this.username);
+                this.userId = iuserId;
+                MainWindow.getMainWindow().setShowMsg(this.userId + " login in!");
+                MainWindow.getMainWindow().addOnlineUsers(this.userId);
+                socketMsg = new SocketMsg(this, this.userId);
                 ChatManager.getChatManager().add(socketMsg);
                 return;
             }

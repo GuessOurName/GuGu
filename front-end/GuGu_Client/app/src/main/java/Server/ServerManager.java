@@ -1,19 +1,11 @@
 package Server;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.google.gson.Gson;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.util.List;
-
-import Util.GroupMsg;
 
 public class ServerManager extends Thread {
     //    192.168.43.58
@@ -27,7 +19,6 @@ public class ServerManager extends Thread {
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private ReceiveChatMsg receiveChatMsg;
-    private List<GroupMsg> groupMsg;
     private static final ServerManager serverManager = new ServerManager();
 
     public static ServerManager getServerManager() {
@@ -120,11 +111,6 @@ public class ServerManager extends Thread {
     public void setMessage(String message) {
         this.message = message;
     }
-
-    public List<GroupMsg> getGroupMsgList() {
-        return groupMsg;
-    }
-
 
     public String getUserId() {
         return userId;

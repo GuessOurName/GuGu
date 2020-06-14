@@ -28,6 +28,7 @@ public class StartServers {
                                 e.printStackTrace();
                             }
                         }
+
                         // Open servers
                         @Override
                         public void start() {
@@ -36,9 +37,12 @@ public class StartServers {
                             if (!listener.isAlive()) {
                                 listener.start();
                             }
+                            ChatSocket chatSocket = new ChatSocket();
+                            chatSocket.dealGetGroupList("1");
                         }
                     });
                     frame.setVisible(true);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

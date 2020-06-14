@@ -68,7 +68,7 @@ public class AtyChatRoom extends AppCompatActivity {
                 if (!content.isEmpty()) {
                     ChatMsg msg = new ChatMsg();
                     msg.setContent(content);
-                    msg.setUsername(ServerManager.getServerManager().getUsername());
+                    msg.setUsername(ServerManager.getServerManager().getUserId());
                     msg.setIconID(ServerManager.getServerManager().getIconID());
                     msg.setMyInfo(true);
                     msg.setChatObj(chatObj);
@@ -96,7 +96,7 @@ public class AtyChatRoom extends AppCompatActivity {
     private boolean sendToChatObj(String content) {
         String msg = "[CHATMSG]:[" + chatObj + ", " + content + ", " + ServerManager.getServerManager().getIconID() +", Text]";
         ServerManager serverManager = ServerManager.getServerManager();
-        serverManager.sendMessage(this, msg,"xxx");
+        serverManager.sendMessage(msg,"xxx");
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {

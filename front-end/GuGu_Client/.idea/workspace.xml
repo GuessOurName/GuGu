@@ -11,7 +11,57 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02c684c5-700a-48a0-af9f-6a41755d7351" name="Default Changelist" comment="update">
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/ChatSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/ChatSocket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/ServerListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/ServerListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/StartServers$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/StartServers$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/StartServers$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/StartServers$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/StartServers.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/GuGu_Server/out/production/GuguServer/Main/StartServers.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/src/Main/ChatSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/GuGu_Server/src/Main/ChatSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/src/Main/ServerListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/GuGu_Server/src/Main/ServerListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/GuGu_Server/src/Main/StartServers.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/GuGu_Server/src/Main/StartServers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Activity/AtyChatRoom$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Activity/AtyChatRoom$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Activity/AtyChatRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Activity/AtyChatRoom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Activity/AtyLoginOrRegister.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Activity/AtyLoginOrRegister.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Server/ParaseData.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Server/ParaseData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Server/ReceiveChatMsg.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Server/ReceiveChatMsg.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Server/ServerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/Server/ServerManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutContacts$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutContacts$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutContacts$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutContacts$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutContacts.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutContacts.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutMoments$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutMoments$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutSlide.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/javac/debug/classes/View/LayoutSlide.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Activity/AtyChatRoom$1.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Activity/AtyChatRoom$1.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Activity/AtyChatRoom.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Activity/AtyChatRoom.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Activity/AtyLoginOrRegister.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Activity/AtyLoginOrRegister.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Server/ParaseData.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Server/ParaseData.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Server/ReceiveChatMsg.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Server/ReceiveChatMsg.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Server/ServerManager.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/Server/ServerManager.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutContacts$1.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutContacts$1.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutContacts$2.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutContacts$2.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutContacts.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutContacts.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutMoments$1.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutMoments$1.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutSlide.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dexBuilder/debug/0/View/LayoutSlide.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/outputs/apk/debug/app-debug.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/Activity/AtyChatRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/Activity/AtyChatRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/Activity/AtyLoginOrRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/Activity/AtyLoginOrRegister.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/Server/ParaseData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/Server/ParaseData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/Server/ReceiveChatMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/Server/ReceiveChatMsg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/Server/ServerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/Server/ServerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/Util/GroupMsg.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/Util/UserItemMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/Util/UserItemMsg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/View/LayoutContacts.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/View/LayoutContacts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/View/LayoutMoments.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/View/LayoutMoments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/View/LayoutSlide.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/View/LayoutSlide.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,30 +204,34 @@
     <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1067" y="350" key="#com.intellij.ide.util.MemberChooser" timestamp="1592124525251">
+    <state x="1302" y="289" key="#com.intellij.ide.util.MemberChooser" timestamp="1592135890679">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="1067" y="350" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1592124525251" />
+    <state x="1302" y="289" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1592135890679" />
+    <state x="925" y="430" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1592135768596">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="925" y="430" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1592135768596" />
     <state x="535" y="132" key="CommitChangelistDialog2" timestamp="1592125422896">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="535" y="132" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1592125422896" />
-    <state width="1860" height="292" key="GridCell.Tab.0.bottom" timestamp="1592123060549">
+    <state width="1860" height="294" key="GridCell.Tab.0.bottom" timestamp="1592135768715">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1860" height="292" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1592123060549" />
-    <state width="1860" height="292" key="GridCell.Tab.0.center" timestamp="1592123060549">
+    <state width="1860" height="294" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1592135768715" />
+    <state width="1860" height="294" key="GridCell.Tab.0.center" timestamp="1592135768715">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1860" height="292" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1592123060549" />
-    <state width="1860" height="292" key="GridCell.Tab.0.left" timestamp="1592123060549">
+    <state width="1860" height="294" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1592135768715" />
+    <state width="1860" height="294" key="GridCell.Tab.0.left" timestamp="1592135768715">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1860" height="292" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1592123060549" />
-    <state width="1860" height="292" key="GridCell.Tab.0.right" timestamp="1592123060549">
+    <state width="1860" height="294" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1592135768715" />
+    <state width="1860" height="294" key="GridCell.Tab.0.right" timestamp="1592135768715">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1860" height="292" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1592123060549" />
+    <state width="1860" height="294" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1592135768715" />
     <state x="752" y="457" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592123723851">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

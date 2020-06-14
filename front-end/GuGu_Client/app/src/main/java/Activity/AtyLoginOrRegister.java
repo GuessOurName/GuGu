@@ -75,12 +75,14 @@ public class AtyLoginOrRegister extends AppCompatActivity implements View.OnClic
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
         serverManager.start();
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login: {
+//                serverManager.sendMessage("","GETGROUPLIST");
                 String userId = etLoginUsername.getText().toString();
                 String password = etLoginPassword.getText().toString();
                 if (login(userId, password)) {

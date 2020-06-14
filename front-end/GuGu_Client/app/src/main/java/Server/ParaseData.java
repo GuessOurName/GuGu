@@ -26,7 +26,7 @@ public class ParaseData {
     public static String[] getDressUp(Context context, String username) {
         String[] strings = {"", ""};
         String msg = "[GETDRESSUP]:[" + username +"]";
-        serverManager.sendMessage(context, msg,"xxx");
+        serverManager.sendMessage(msg,"xxx");
         String ack = serverManager.getMessage();
         if (ack == null) {
             Toast.makeText(context, "load dress up failed", Toast.LENGTH_SHORT).show();
@@ -46,7 +46,7 @@ public class ParaseData {
     public static String[] getProfile(Context context, String username) {
         String[] strings = {""};
         String msg = "[GETPROFILE]:[" + username + "]";
-        serverManager.sendMessage(context, msg,"xxx");
+        serverManager.sendMessage(msg,"xxx");
         String ack = serverManager.getMessage();
         if (ack == null) {
             Toast.makeText(context, "load profile failed", Toast.LENGTH_SHORT).show();
@@ -65,7 +65,7 @@ public class ParaseData {
     public static List<String> getGroupList(Context context, String username) {
         List<String> strings = new ArrayList<>();
         String msg = "[GETGROUPLIST]:[" + username + "]";
-        serverManager.sendMessage(context, msg,"xxx");
+        serverManager.sendMessage(msg,"xxx");
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
@@ -89,7 +89,7 @@ public class ParaseData {
     public static List<String> getFriendList(Context context, String username) {
         List<String> strings = new ArrayList<>();
         String msg = "[GETFRIENDLIST]:[" + username + "]";
-        serverManager.sendMessage(context, msg,"xxx");
+        serverManager.sendMessage( msg,"xxx");
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
@@ -113,7 +113,7 @@ public class ParaseData {
     public static String[] getFriendProfile(Context context, String username) {
         String[] strings = {"", "", "", ""};
         String msg = "[GETFRIENDPROFILE]:[" + username + "]";
-        serverManager.sendMessage(context, msg,"xxx");
+        serverManager.sendMessage(msg,"xxx");
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
@@ -140,7 +140,7 @@ public class ParaseData {
     public static List<String> getAllGroupList(Context context) {
         List<String> strings = new ArrayList<>();
         String msg = "[GETALLGROUPLIST]:[]";
-        serverManager.sendMessage(context, msg,"xxx");
+        serverManager.sendMessage(msg,"xxx");
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {

@@ -81,7 +81,6 @@ public class ServerManager extends Thread {
             this.message = msg;
         }else if(receiveMsgType.equals("UserItems")){
             this.message = msg;
-
         } else if (receiveMsgType.equals("CHATMSG")) {
             dealChatMsg(msg);
         }
@@ -91,11 +90,13 @@ public class ServerManager extends Thread {
         return;
     }
 
+    // 接收信息
     public void dealChatMsg(String msg) {
         Gson gson = new Gson();
         ChatMsg chatMsg = gson.fromJson(msg, ChatMsg.class);
         AtyChatRoom.chatMsgList.add(chatMsg);
         sendMessage("ACKCHATMSG");
+
     }
 
     public void sendMessage(String msg) {

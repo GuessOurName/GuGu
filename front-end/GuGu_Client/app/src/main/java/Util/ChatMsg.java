@@ -7,17 +7,21 @@ public class ChatMsg {
 
     private boolean myInfo;
     private int iconID;
+    // 发送者
     private String username;
     private String content;
+    // 接收者
     private String chatObj;
-    private String group;
 
-    public String getGroup() {
-        return group;
+
+    private int isGroup;
+
+    public int getIsGroup() {
+        return isGroup;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setIsGroup(int isGroup) {
+        this.isGroup = isGroup;
     }
 
     public static List<ChatMsg> chatMsgList = new ArrayList<>();

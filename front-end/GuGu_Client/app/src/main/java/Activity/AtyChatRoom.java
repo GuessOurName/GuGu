@@ -55,9 +55,10 @@ public class AtyChatRoom extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.lv_chat_room);
         myMsg = (EditText) findViewById(R.id.myMsg);
         btnSend = (Button) findViewById(R.id.btnSend);
-        chatObj = getIntent().getStringExtra("username");
+        chatObj = getIntent().getStringExtra("Id");
+        group = getIntent().getStringExtra("Type");
         titleBar.setTitleText(chatObj);
-        group = ParaseData.getAllGroupList(this).contains(chatObj) ? "0" : "1";
+//        group = ParaseData.getAllGroupList(this).contains(chatObj) ? "0" : "1";
         chatMsgList.clear();
         loadChatMsg();
         adapterChatMsgList = new AdapterChatMsg(AtyChatRoom.this, R.layout.chat_other, chatMsgList);
@@ -71,9 +72,14 @@ public class AtyChatRoom extends AppCompatActivity {
                     msg.setContent(content);
                     msg.setUsername(ServerManager.getServerManager().getUserId());
                     msg.setIconID(ServerManager.getServerManager().getIconID());
+                    // 标记消息归属
                     msg.setMyInfo(true);
                     msg.setChatObj(chatObj);
-                    msg.setGroup(group.equals("0") ? chatObj : " ");
+                    if(group.equals("1")){
+                        msg.setIsGroup(1);
+                    }else {
+                        msg.setIsGroup(0);
+                    }
                     if (sendToChatObj(msg)) {
                         ChatMsg.chatMsgList.add(msg);
                         chatMsgList.add(msg);
@@ -89,8 +95,10 @@ public class AtyChatRoom extends AppCompatActivity {
             public void leftButtonClick() {
                 finish();
             }
+
             @Override
-            public void rightButtonClick() { }
+            public void rightButtonClick() {
+            }
         });
     }
 
@@ -116,9 +124,15 @@ public class AtyChatRoom extends AppCompatActivity {
     private boolean sendToChatObj(ChatMsg chatMsg) {
         ServerManager serverManager = ServerManager.getServerManager();
         String msg = gson.toJson(chatMsg);
+        System.out.println(msg);
         serverManager.sendMessage(msg, "CHATMSG");
+        try {
+            Thread.sleep(500);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         String ack = serverManager.getMessage();
-        if(ack == null) {
+        if (ack == null) {
             return false;
         }
         return true;
@@ -126,15 +140,18 @@ public class AtyChatRoom extends AppCompatActivity {
 
 
     private void loadChatMsg() {
-        if (group == "0") {
+//        if(ChatMsg.chatMsgList.isEmpty()){
+//            return;
+//        }
+        if (group.equals("1")) {
             for (ChatMsg chatMsg : ChatMsg.chatMsgList) {
-                if (chatMsg.getGroup().equals(chatObj)) {
+                if (chatMsg.getIsGroup()==1) {
                     chatMsgList.add(chatMsg);
                 }
             }
         } else {
             for (ChatMsg chatMsg : ChatMsg.chatMsgList) {
-                if (chatMsg.getChatObj().equals(chatObj) && chatMsg.getGroup().equals(" ")) {
+                if (chatMsg.getChatObj().equals(chatObj) && chatMsg.getIsGroup()==0) {
                     chatMsgList.add(chatMsg);
                 }
             }

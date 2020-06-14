@@ -81,10 +81,10 @@ public class AdapterUserItem extends RecyclerView.Adapter<AdapterUserItem.BaseVi
                     Intent intent = new Intent(context, AtyChatRoom.class);
                     intent.putExtra("Type",userItemMsg.getItemType() );
                     if(userItemMsg.getItemType()==1){
-                        intent.putExtra("Id",Integer.parseInt(userItemMsg.getGroupId()));
+                        intent.putExtra("Id",userItemMsg.getGroupId());
                     }
                     else if(userItemMsg.getItemType()==2) {
-                        intent.putExtra("Id",Integer.parseInt(userItemMsg.getUserId()));
+                        intent.putExtra("Id",userItemMsg.getUserId());
                     }
                     context.startActivity(intent);
 

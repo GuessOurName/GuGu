@@ -8,8 +8,17 @@ public class MomentMsg {
     private int iconID;
     private String userId;
     private String moment;
-    private int good;
+    private int good=0;
+    private int good_num;
     private String time;
+
+    public int getGoodNum() {
+        return good_num;
+    }
+
+    public void setGoodNum(int good_num) {
+        this.good_num = good_num;
+    }
 
     public String getTime() {
         return time;

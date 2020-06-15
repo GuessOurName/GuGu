@@ -35,6 +35,7 @@
         <activity android:name="Activity.AtyMain" />
         <activity android:name="Activity.AtyProfile" />
         <activity android:name="Activity.AtySetting" />
+        <activity android:name="Activity.AtyAdd" />
     </application>
 
 </manifest>

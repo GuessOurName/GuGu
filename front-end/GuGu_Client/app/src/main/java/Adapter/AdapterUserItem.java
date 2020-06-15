@@ -41,14 +41,14 @@ public class AdapterUserItem extends RecyclerView.Adapter<AdapterUserItem.BaseVi
 
         if(userItemMsgList.get(position).getItemType()==1){
             holder.ivAvatar.setImageResource(ImageManager.imagesAvatar[0]);
-            holder.tvUsername.setText("GroupId : "+userItemMsgList.get(position).getGroupName());
-            holder.tvSign.setText("CreaterId : "+userItemMsgList.get(position).getCreaterId());
+            holder.tvUsername.setText(userItemMsgList.get(position).getGroupName());
+            holder.tvSign.setText(userItemMsgList.get(position).getCreaterId());
             holder.setUserItemMsg(userItemMsgList.get(position));
         }
         else if(userItemMsgList.get(position).getItemType()==2){
             holder.ivAvatar.setImageResource(ImageManager.imagesAvatar[1]);
-            holder.tvUsername.setText("GroupId : "+userItemMsgList.get(position).getUserName());
-            holder.tvSign.setText("CreaterId : "+userItemMsgList.get(position).getSign());
+            holder.tvUsername.setText(userItemMsgList.get(position).getUserName());
+            holder.tvSign.setText(userItemMsgList.get(position).getSign());
             holder.setUserItemMsg(userItemMsgList.get(position));
         }
     }

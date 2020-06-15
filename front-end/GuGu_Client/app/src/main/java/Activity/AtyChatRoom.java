@@ -1,6 +1,9 @@
 package Activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -20,7 +23,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Adapter.AdapterChatMsg;
-import Server.ParaseData;
 import Server.ServerManager;
 import Util.ChatMsg;
 import View.TitleBar;
@@ -121,11 +123,22 @@ public class AtyChatRoom extends AppCompatActivity {
 //        return matcher.find() && matcher.group(1).equals("1");
 //    }
 
+    @SuppressLint("HandlerLeak")
+    public static Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                adapterChatMsgList.notifyDataSetChanged();
+            }
+        }
+    };
+
     private boolean sendToChatObj(ChatMsg chatMsg) {
         ServerManager serverManager = ServerManager.getServerManager();
         String msg = gson.toJson(chatMsg);
         System.out.println(msg);
         serverManager.sendMessage(msg, "CHATMSG");
+        adapterChatMsgList.notifyDataSetChanged();
 //        try {
 //            Thread.sleep(500);
 //        }catch (Exception e){

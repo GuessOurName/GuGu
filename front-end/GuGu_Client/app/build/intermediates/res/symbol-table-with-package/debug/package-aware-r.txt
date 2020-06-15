@@ -1197,6 +1197,8 @@ id btn_moment_send
 id btn_profile_submit
 id btn_register
 id btn_save
+id btn_search_friend
+id btn_search_group
 id buttonPanel
 id center
 id center_horizontal
@@ -1230,6 +1232,7 @@ id edit_query
 id end
 id enterAlways
 id enterAlwaysCollapsed
+id et_add
 id et_insure_password
 id et_login_password
 id et_login_username
@@ -1381,6 +1384,7 @@ id tag_screen_reader_focusable
 id tag_transition_group
 id tag_unhandled_key_event_manager
 id tag_unhandled_key_listeners
+id tb_add
 id tb_chat_room
 id tb_dress_up
 id tb_main
@@ -1409,6 +1413,7 @@ id transition_layout_save
 id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
+id tv_good_number
 id tv_item_sign
 id tv_item_username
 id tv_moment_content
@@ -1484,6 +1489,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout aty_add
 layout aty_chat_room
 layout aty_dress_up
 layout aty_guide

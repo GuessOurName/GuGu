@@ -48,27 +48,21 @@ public class AdapterChatMsg extends ArrayAdapter<ChatMsg> {
         View view;
         ViewHolder viewHolder;
 
-        if (convertView == null) {
-            assert msg != null;
-            if (!msg.isMyInfo()) {
-                view = inflater.inflate(R.layout.chat_other, parent, false);
-            } else {
-                view = inflater.inflate(R.layout.chat_me, parent, false);
-            }
-            viewHolder = new ViewHolder();
-            viewHolder.icon = (ImageView) view.findViewById(R.id.icon);
-            viewHolder.username = (TextView) view.findViewById(R.id.username);
-            viewHolder.content = (TextView) view.findViewById(R.id.content);
-
-            view.setTag(viewHolder);
+        if (!msg.isMyInfo()) {
+            view = inflater.inflate(R.layout.chat_other, parent, false);
         } else {
-            view = convertView;
-            viewHolder = (ViewHolder) view.getTag();
+            view = inflater.inflate(R.layout.chat_me, parent, false);
         }
+        viewHolder = new ViewHolder();
+        viewHolder.icon = (ImageView) view.findViewById(R.id.icon);
+        viewHolder.username = (TextView) view.findViewById(R.id.username);
+        viewHolder.content = (TextView) view.findViewById(R.id.content);
+        view.setTag(viewHolder);
         viewHolder.icon.setImageResource(ImageManager.imagesAvatar[chatMsgs.get(position).getIconID()]);
-        viewHolder.username.setText(msg.isMyInfo() ? chatMsgs.get(position).getUsername() : chatMsgs.get(position).getChatObj());
+        viewHolder.username.setText(chatMsgs.get(position).getUsername());
         viewHolder.content.setText(chatMsgs.get(position).getContent());
         return view;
+
     }
 
     private class ViewHolder {

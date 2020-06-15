@@ -1,5 +1,6 @@
 package View;
 
+import android.net.sip.SipErrorCode;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gugu_client.R;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,20 @@ public class LayoutMoments extends Fragment {
 
         momentMsgList = new ArrayList<>();
         momentMsgList.clear();
+
+
+        ServerManager serverManager = ServerManager.getServerManager();
+        String msg = "GETMOMENTMSG";
+        serverManager.sendMessage(msg);
+        String ack = serverManager.getMessage();
+        List<MomentMsg> momentMsgs = gson.fromJson(ack, new TypeToken<List<MomentMsg>>() {
+        }.getType());
+
+        if(momentMsgs != null) {
+            momentMsgList = momentMsgs;
+        }
+
+
         loadData();
 
         adapterMomentItem = new AdapterMomentItem(getContext(), momentMsgList);
@@ -61,13 +77,14 @@ public class LayoutMoments extends Fragment {
                 momentMsg.setUserId(ServerManager.getServerManager().getUserId());
                 momentMsg.setIconID(ServerManager.getServerManager().getIconID());
                 momentMsg.setMoment(tvNewMoment.getText().toString());
-                momentMsg.setGood(R.drawable.ungood);
+                momentMsg.setGood(R.id.tv_good_number);
                 tvNewMoment.setText("");
+                System.out.println(momentMsgList);
                 momentMsgList.add(momentMsg);
                 MomentMsg.momentMsgList.add(momentMsg);
                 String msg = gson.toJson(momentMsg);
                 ServerManager serverManager = ServerManager.getServerManager();
-                serverManager.sendMessage(msg, "MOMENTMSG");
+                serverManager.sendMessage(msg, "ADDMOMENTMSG");
             }
         });
     }

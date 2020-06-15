@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.AdapterUserItem;
-import Server.ParaseData;
 import Server.ServerManager;
 import Util.UserItemMsg;
 
@@ -46,22 +45,33 @@ public class LayoutContacts extends Fragment {
     private Gson gson = new Gson();
     private final static String TAG = "LayoutContacts";
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.layout_contacts, container, false);
         this.context = inflater.getContext();
-        loadUserMsgList();
-        initGroupViews();
-        initContactViews();
+        initView();
         return rootView;
     }
 
+    public void initView(){
+        loadUserMsgList();
+        initGroupViews();
+        initContactViews();
+    }
 
     public void loadUserMsgList() {
         ServerManager serverManager = ServerManager.getServerManager();
         String userId = serverManager.getUserId();
         serverManager.sendMessage("", "GETUSERITEM");
+
+        try {
+            Thread.sleep(1000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         String msg = serverManager.getMessage();
 //        Log.d(TAG, msg);
         System.out.println(msg);

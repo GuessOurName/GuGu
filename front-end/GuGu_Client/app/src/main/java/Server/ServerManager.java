@@ -1,5 +1,7 @@
 package Server;
 
+import android.os.Message;
+
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -16,14 +18,14 @@ public class ServerManager extends Thread {
     //    192.168.43.58
 //    10.85.15.88
 //    private Gson gson=new Gson();
-    private static final String IP = "10.0.2.2";
+    private static final String IP = "192.168.43.199";
     private Socket socket;
     private String userId;
     private int iconID;
     private String message = null;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
-//    private ReceiveChatMsg receiveChatMsg;
+    //    private ReceiveChatMsg receiveChatMsg;
     private static final ServerManager serverManager = new ServerManager();
     private Gson gson = new Gson();
     public static ServerManager getServerManager() {
@@ -79,15 +81,31 @@ public class ServerManager extends Thread {
             this.message = "SUCCESS";
         } else if (receiveMsgType.equals("REGACK")) {
             this.message = msg;
-        }else if(receiveMsgType.equals("UserItems")){
+        }else if(receiveMsgType.equals("USERITEM")){
             this.message = msg;
+            System.out.println("jie shou " +this.message);
         } else if (receiveMsgType.equals("CHATMSG")) {
             dealChatMsg(msg);
+        }else if (receiveMsgType.equals("ACKADDFRIEND")){
+            this.message=msg;
+        }else if (receiveMsgType.equals("ADDFRIENDFAIL")){
+            this.message=msg;
+        }else if (receiveMsgType.equals("ACKADDGROUP")){
+            this.message=msg;
+        }else if (receiveMsgType.equals("ADDGROUPFAIL")){
+            this.message=msg;
+        }else if(receiveMsgType.equals("ACKGETMOMENT")){
+            this.message=msg;
         }
         else {
+            System.out.println("Error : " +receiveMsgType + "msg : "+ msg);
             this.message = null;
         }
         return;
+    }
+
+    public void dealAddFriend(String msg){
+
     }
 
     // 接收信息
@@ -95,6 +113,9 @@ public class ServerManager extends Thread {
         Gson gson = new Gson();
         ChatMsg chatMsg = gson.fromJson(msg, ChatMsg.class);
         AtyChatRoom.chatMsgList.add(chatMsg);
+        Message message = new Message();
+        message.what = 1;
+        AtyChatRoom.handler.sendMessage(message);
         sendMessage("ACKCHATMSG");
 
     }

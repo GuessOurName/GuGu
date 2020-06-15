@@ -45,11 +45,5 @@
 
     </LinearLayout>
 
-    <View.LayoutSlide
-        android:clickable="true"
-        android:layout_gravity="start"
-        android:layout_width="270dp"
-        android:layout_height="match_parent" />
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

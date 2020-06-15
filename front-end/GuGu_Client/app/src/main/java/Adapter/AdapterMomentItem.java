@@ -34,9 +34,11 @@ public class AdapterMomentItem extends RecyclerView.Adapter<AdapterMomentItem.Ba
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         holder.imageView.setImageResource(ImageManager.imagesAvatar[momentMsgList.get(position).getIconID()]);
-        holder.username.setText(momentMsgList.get(position).getUsername());
+        holder.username.setText(momentMsgList.get(position).getUserId());
         holder.moment.setText(momentMsgList.get(position).getMoment());
-        holder.good.setImageResource(momentMsgList.get(position).getGood());
+//        holder.good.setImageResource(momentMsgList.get(position).getGood());
+        holder.good.setImageResource(R.drawable.ungood);
+        holder.good_num.setText(String.valueOf(momentMsgList.get(position).getGoodNum()));
     }
 
     @Override
@@ -51,6 +53,7 @@ public class AdapterMomentItem extends RecyclerView.Adapter<AdapterMomentItem.Ba
         private TextView moment;
         private ImageView good;
         private boolean isgood = false;
+        private TextView good_num;
 
         BaseViewHolder(View itemView) {
             super(itemView);
@@ -58,6 +61,7 @@ public class AdapterMomentItem extends RecyclerView.Adapter<AdapterMomentItem.Ba
             username = (TextView) itemView.findViewById(R.id.tv_moment_content_username);
             moment = (TextView) itemView.findViewById(R.id.tv_moment_content);
             good = (ImageView) itemView.findViewById(R.id.iv_good);
+            good_num = (TextView) itemView.findViewById(R.id.tv_good_number);
 
             good.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -65,7 +69,12 @@ public class AdapterMomentItem extends RecyclerView.Adapter<AdapterMomentItem.Ba
                     good.setImageResource(isgood ? R.drawable.ungood : R.drawable.good);
                     for (MomentMsg momentMsg : MomentMsg.momentMsgList) {
                         if (momentMsg.getMoment().equals(moment.getText().toString())) {
-                            momentMsg.setGood(isgood ? R.drawable.ungood : R.drawable.good);
+                            int goods = Integer.parseInt(good_num.getText().toString());
+                            goods = isgood? goods - 1: goods + 1;
+                            momentMsg.setGood(goods);
+                            String str_goods = String.valueOf(goods);
+                            good_num.setText(str_goods);
+
                         }
                     }
                     isgood = !isgood;

@@ -1,5 +1,7 @@
 package Activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -25,10 +27,14 @@ import View.TitleBar;
 
 public class AtyMain extends AppCompatActivity {
 
+    private Context context;
     private TitleBar titleBar;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private List<TabLayout.Tab> tabList;
+    private LayoutChats chats;
+    private LayoutContacts contacts;
+    private LayoutMoments moments;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +47,7 @@ public class AtyMain extends AppCompatActivity {
 
 
     private void initViews() {
+        context=this;
         titleBar = (TitleBar) findViewById(R.id.tb_main);
         viewPager = (ViewPager) findViewById(R.id.vp_main);
         tabLayout = (TabLayout) findViewById(R.id.tl_main);
@@ -48,9 +55,12 @@ public class AtyMain extends AppCompatActivity {
         //对主界面下方Tab添加碎片
         tabList = new ArrayList<>();
         AdapterMainViewPager adapter = new AdapterMainViewPager(getSupportFragmentManager());
-        adapter.addFragment(new LayoutChats());
-        adapter.addFragment(new LayoutContacts());
-        adapter.addFragment(new LayoutMoments());
+        chats=new LayoutChats();
+        contacts=new LayoutContacts();
+        moments=new LayoutMoments();
+        adapter.addFragment(chats);
+        adapter.addFragment(contacts);
+        adapter.addFragment(moments);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabList.add(tabLayout.getTabAt(0));
@@ -86,12 +96,34 @@ public class AtyMain extends AppCompatActivity {
             @Override
             public void leftButtonClick() {
                 Toast.makeText(AtyMain.this, "Left Button Success", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void rightButtonClick() {
-                Toast.makeText(AtyMain.this, "Right Button Success", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, AtyAdd.class);
+                startActivityForResult(intent,0);
             }
+
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(data==null){
+            Toast.makeText(this, "Add Error", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Bundle bundle = data.getExtras();
+        String STATE = bundle.getString("STATE");
+        if(STATE.equals("1")){
+            Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show();
+            contacts.initView();
+        }
+        else{
+            Toast.makeText(this, "添加失败", Toast.LENGTH_SHORT).show();
+        }
     }
 }

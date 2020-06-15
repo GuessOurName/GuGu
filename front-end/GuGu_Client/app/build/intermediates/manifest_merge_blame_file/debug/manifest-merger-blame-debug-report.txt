@@ -18,7 +18,7 @@
 12-->C:\Users\littlep\AndroidStudioProjects\GuGu\front-end\GuGu_Client\app\src\main\AndroidManifest.xml:6:22-64
 13
 14    <application
-14-->C:\Users\littlep\AndroidStudioProjects\GuGu\front-end\GuGu_Client\app\src\main\AndroidManifest.xml:7:5-26:19
+14-->C:\Users\littlep\AndroidStudioProjects\GuGu\front-end\GuGu_Client\app\src\main\AndroidManifest.xml:7:5-27:19
 15        android:allowBackup="true"
 15-->C:\Users\littlep\AndroidStudioProjects\GuGu\front-end\GuGu_Client\app\src\main\AndroidManifest.xml:8:9-35
 16        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -67,6 +67,9 @@
 36        <activity android:name="Activity.AtySetting" />
 36-->C:\Users\littlep\AndroidStudioProjects\GuGu\front-end\GuGu_Client\app\src\main\AndroidManifest.xml:25:9-56
 36-->C:\Users\littlep\AndroidStudioProjects\GuGu\front-end\GuGu_Client\app\src\main\AndroidManifest.xml:25:19-53
-37    </application>
-38
-39</manifest>
+37        <activity android:name="Activity.AtyAdd" />
+37-->C:\Users\littlep\AndroidStudioProjects\GuGu\front-end\GuGu_Client\app\src\main\AndroidManifest.xml:26:9-52
+37-->C:\Users\littlep\AndroidStudioProjects\GuGu\front-end\GuGu_Client\app\src\main\AndroidManifest.xml:26:19-49
+38    </application>
+39
+40</manifest>

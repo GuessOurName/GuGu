@@ -25,19 +25,18 @@ public class MainWindow extends JFrame {
     private static final MainWindow mainWindow = new MainWindow();
     private List<String> onlineUsernameList = new ArrayList<>();
 
-    /**
-     * This is a listener interface for start button
-     * @author Fitzeng
-     */
+
+
+
     public interface OnStartServersListener {
         void start();
         void stop();
     }
 
-//    /**
-//     * Set listener function
-//     * @param linster
-//     */
+    public String getPort(){
+        return textFieldPort.getText();
+    }
+
     public void setOnStartServersListener (OnStartServersListener listener) {
         this.listener = listener;
     }

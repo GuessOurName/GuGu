@@ -95,47 +95,30 @@ public class ChatSocket extends Thread {
                     dealRegister(msg);
                     break;
                 }
-                case "DRESSUP": {
-                    dealDressUp(msg);
-                    break;
-                }
-                case "GETDRESSUP": {
-                    dealGetDressUp(msg);
-                    break;
-                }
-                case "PROFILE": {
-                    dealProfile(msg);
-                    break;
-                }
-                case "GETPROFILE": {
-                    dealGetProfile(msg);
-                    break;
-                }
                 case "GETUSERITEM": {   //1
                     getUserItem(msg);
-                    break;
-                }
-                case "STATE": {
-                    dealState(msg);
                     break;
                 }
                 case "CHATMSG": {   //1
                     dealChatMsg(msg);
                     break;
                 }
-                case "ADDFRIEND": {
+                case "ADDFRIEND": { // 1
                     dealAddFriend(msg);
                     break;
                 }
-                case "ADDGROUP": {
+                case "ADDGROUP": {  // 1
                     dealAddGroup(msg);
                     break;
                 }
-                case "MOMENTMSG":{
-                    dealMoment(msg);
+                case "ADDMOMENT": { // 1
+                    dealAddMoment(msg);
+                }
+                case "GETMOMENT":{  // 1
+                    dealGetMoment(msg);
                 }
                 default:
-                    dealError();
+                    dealError();    // 1
                     break;
             }
         }
@@ -164,17 +147,79 @@ public class ChatSocket extends Thread {
 
 
     private void dealError() {
+        String error = "Server cant resolve messageType!";
+        sendMsg("ERROR",error);
     }
 
 
     private void dealAddGroup(String msg) {
+        String sqlSearchGroupById = "SELECT * FROM Groups WHERE GroupId=" + msg + ";\n";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlSearchGroupById);
+            if (resultSet.next()) {
+                String sqlIsGroup = "SELECT * FROM GroupInfo WHERE UserId=" + userId + "and GroupId=" + msg + ";\n";
+                Statement statement1 = connection.createStatement();
+                ResultSet resultSet1 = statement1.executeQuery(sqlIsGroup);
+                if (!resultSet1.next()) {
+                    String sqlAddGroup = "INSERT INTO GroupInfo VALUE(" + userId + "," + msg + ");\n";
+                    Statement statement2 = connection.createStatement();
+                    int result1 = statement2.executeUpdate(sqlAddGroup);
+                    sendMsg("ACKADDGROUP", "1");
+                } else {
+                    sendMsg("ADDGROUPFAIL", "-1");
+                }
+            } else {
+                sendMsg("ADDGROUPFAIL", "-1");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void dealMoment(String msg){
-        MomentMsg momentMsg = gson.fromJson(msg,MomentMsg.class);
-        String sqlMoment = "INSERT INTO Comments VALUE()";
+    private void dealAddMoment(String msg) {
+        MomentMsg momentMsg = gson.fromJson(msg, MomentMsg.class);
+        String from = momentMsg.getUserId();
+        int likes = momentMsg.getGood();
+        String content = momentMsg.getMoment();
+        Date curTime = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String time = simpleDateFormat.format(curTime);
+        String sqlMoment = "INSERT INTO Moments(UserId,Likes,Msg,MomentTime) VALUE("+from+","+likes+",'"+content+"','"+time+"');\n";
+        try{
+            Statement statement = connection.createStatement();
+            int result = statement.executeUpdate(sqlMoment);
+            if(result>0){
+                sendMsg("ACKADDMOMENT","1");
+            }else {
+                sendMsg("ADDMOMENTFAIL","-1");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
     }
 
+    private void dealGetMoment(String msg){
+        List<MomentMsg>momentMsgList=new ArrayList<>();
+        String sqlgetMoment = "SELECT UserId,Likes,Msg,MomentTime FROM Friends,Moments WHERE Friends.UserId="+userId+"Friends.FriendId=Moments.UserId;\n";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlgetMoment);
+            while(resultSet.next()){
+                MomentMsg momentMsg = new MomentMsg();
+                momentMsg.setGood(resultSet.getInt("Likes"));
+                momentMsg.setMoment(resultSet.getString("Msg"));
+                momentMsg.setUserId(String.valueOf(resultSet.getInt("UserId")));
+                momentMsg.setTime(resultSet.getString("MomentTime"));
+                momentMsgList.add(momentMsg);
+            }
+            String moments = gson.toJson(momentMsgList);
+            sendMsg("ACKGETMOMENT",moments);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 
     private void dealAddFriend(String msg) {
         // 根据id查找
@@ -184,20 +229,24 @@ public class ChatSocket extends Thread {
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlSearchFriendById);
-            if(resultSet.next()){
-                String sqlIsFriend ="SELECT * FROM Friends WHERE UserId="+userId+"and FriendId="+msg+";\n";
+            if (resultSet.next()) {
+                String sqlIsFriend = "SELECT * FROM Friends WHERE UserId=" + userId + "and FriendId=" + msg + ";\n";
                 Statement statement1 = connection.createStatement();
                 ResultSet resultSet1 = statement1.executeQuery(sqlIsFriend);
-                if(!resultSet1.next()){
-                    String sqlAddFriend1 = "INSERT INTO Friends VALUE("+userId+","+msg+");\n";
-                    String sqlAddFriend2 = "INSERT INTO Friends VALUE("+msg+","+userId+");\n";
+                if (!resultSet1.next()) {
+                    String sqlAddFriend1 = "INSERT INTO Friends VALUE(" + userId + "," + msg + ");\n";
+                    String sqlAddFriend2 = "INSERT INTO Friends VALUE(" + msg + "," + userId + ");\n";
                     Statement statement2 = connection.createStatement();
                     int result1 = statement2.executeUpdate(sqlAddFriend1);
                     int result2 = statement2.executeUpdate(sqlAddFriend2);
-                    sendMsg("ACKADDFRIEND","1");
+                    sendMsg("ACKADDFRIEND", "1");
+                } else {
+                    sendMsg("ADDFRIENDFAIL", "-1");
                 }
+            } else {
+                sendMsg("ADDFRIENDFAIL", "-1");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -259,9 +308,6 @@ public class ChatSocket extends Thread {
                 }
             }
         }
-    }
-
-    private void dealState(String msg) {
     }
 
 

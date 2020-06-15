@@ -13,7 +13,7 @@ public class ServerListener extends Thread{
     @Override
     public void run() {
         try {
-            // 队列长度27
+            // 队列长度backlog
             int port  = Integer.parseInt(MainWindow.getMainWindow().getPort());
             serverSocket = new ServerSocket(port, 20);
             while (true) {

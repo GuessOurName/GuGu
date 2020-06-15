@@ -54,6 +54,11 @@ public class LayoutMoments extends Fragment {
         ServerManager serverManager = ServerManager.getServerManager();
         String msg = "GETMOMENTMSG";
         serverManager.sendMessage(msg);
+        try {
+            Thread.sleep(1000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         String ack = serverManager.getMessage();
         List<MomentMsg> momentMsgs = gson.fromJson(ack, new TypeToken<List<MomentMsg>>() {
         }.getType());

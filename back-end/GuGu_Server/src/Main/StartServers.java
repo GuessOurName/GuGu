@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 public class StartServers {
     public static void main(String[] args) {
+        // awt的事件处理线程
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -17,7 +18,7 @@ public class StartServers {
                     ServerListener listener = new ServerListener();
 
                     frame.setOnStartServersListener(new MainWindow.OnStartServersListener() {
-                        // Do something when servers stop
+                        // 停止
                         @Override
                         public void stop() {
                             try {
@@ -29,7 +30,7 @@ public class StartServers {
                             }
                         }
 
-                        // Open servers
+                        // 开始
                         @Override
                         public void start() {
                             dbManager.addDBDriver();

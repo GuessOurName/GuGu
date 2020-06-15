@@ -58,6 +58,11 @@ public class AtyAdd extends AppCompatActivity {
                     return;
                 }
                 ServerManager.getServerManager().sendMessage(msg,"ADDFRIEND");
+                try {
+                    Thread.sleep(1000);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 if(ServerManager.getServerManager().getMessage().equals("1")){
                     Intent intent=new Intent();
                     intent.putExtra("STATE","1");
@@ -82,6 +87,11 @@ public class AtyAdd extends AppCompatActivity {
                     return;
                 }
                 ServerManager.getServerManager().sendMessage(msg,"ADDGROUP");
+                try {
+                    Thread.sleep(1000);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 if(ServerManager.getServerManager().getMessage().equals("1")){
                     Intent intent=new Intent();
                     intent.putExtra("STATE","1");

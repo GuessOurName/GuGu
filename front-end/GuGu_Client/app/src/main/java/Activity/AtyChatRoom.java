@@ -104,25 +104,6 @@ public class AtyChatRoom extends AppCompatActivity {
         });
     }
 
-//    private boolean sendToChatObj(String content) {
-//        String msg = "[CHATMSG]:[" + chatObj + ", " + content + ", " + ServerManager.getServerManager().getIconID() +", Text]";
-//        ServerManager serverManager = ServerManager.getServerManager();
-//        serverManager.sendMessage(msg,"xxx");
-//        try {
-//            Thread.sleep(300);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        String ack = serverManager.getMessage();
-//        if (ack == null) {
-//            return false;
-//        }
-//        String p = "\\[ACKCHATMSG\\]:\\[(.*)\\]";
-//        Pattern pattern = Pattern.compile(p);
-//        Matcher matcher = pattern.matcher(ack);
-//        return matcher.find() && matcher.group(1).equals("1");
-//    }
-
     @SuppressLint("HandlerLeak")
     public static Handler handler = new Handler(){
         @Override

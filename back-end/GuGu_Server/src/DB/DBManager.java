@@ -15,14 +15,6 @@ public class DBManager {
             + "useUnicode=true&useJDBCCompliantTimezoneShift=true&"
             + "useLegacyDatetimeCode=false&serverTimezone=UTC";
 
-//    private static final String url = "jdbc:mysql://localhost/zzchats?"
-//            + "useUnicode=true&useJDBCCompliantTimezoneShift=true&"
-//            + "useLegacyDatetimeCode=false&serverTimezone=UTC";
-
-
-
-    private Statement statement;
-
     public static DBManager getDBManager() {
         return dbManager;
     }
@@ -35,10 +27,9 @@ public class DBManager {
 
     public void addDBDriver() {
         try {
+            // 加载驱动
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            MainWindow.getMainWindow().setShowMsg("load mysql driver success");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            MainWindow.getMainWindow().setShowMsg("load mysql driver failed");
             e.printStackTrace();
         }
     }
@@ -46,9 +37,9 @@ public class DBManager {
 
     public void connectDB() {
         try {
+            // 通过DriverManager类创建数据库连接对象Connection
             connection = DriverManager.getConnection(url, "root", "123456");
             MainWindow.getMainWindow().setShowMsg("connect gugu mysql success");
-
         } catch (SQLException e) {
             MainWindow.getMainWindow().setShowMsg("connect gugu mysql failed");
             e.printStackTrace();

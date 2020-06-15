@@ -127,6 +127,12 @@ public class AtyLoginOrRegister extends AppCompatActivity implements View.OnClic
         //通过severMessage发生消息
         serverManager.sendMessage(msg,"LOGIN");
 
+        try {
+            Thread.sleep(1000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         //从serverMessage获取返回消息
         String ack = serverManager.getMessage();
 
@@ -155,6 +161,11 @@ public class AtyLoginOrRegister extends AppCompatActivity implements View.OnClic
         RegisterMsg registerMsg = new RegisterMsg(username,password1);
         String msg = gson.toJson(registerMsg);
         serverManager.sendMessage(msg,"REGISTER");
+        try {
+            Thread.sleep(1000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         String ack = serverManager.getMessage();
         if (ack == null) {
             Toast.makeText(AtyLoginOrRegister.this, "注册失败", Toast.LENGTH_SHORT).show();

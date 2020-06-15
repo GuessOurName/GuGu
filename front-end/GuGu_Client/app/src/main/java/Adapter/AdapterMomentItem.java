@@ -13,10 +13,11 @@ import com.example.gugu_client.R;
 
 import java.util.List;
 
+import Server.ServerManager;
 import Util.ImageManager;
 import Util.MomentMsg;
 
-public class AdapterMomentItem extends RecyclerView.Adapter<AdapterMomentItem.BaseViewHolder>{
+public class AdapterMomentItem extends RecyclerView.Adapter<AdapterMomentItem.BaseViewHolder> {
 
     private Context context;
     private List<MomentMsg> momentMsgList;
@@ -35,6 +36,8 @@ public class AdapterMomentItem extends RecyclerView.Adapter<AdapterMomentItem.Ba
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         holder.imageView.setImageResource(ImageManager.imagesAvatar[momentMsgList.get(position).getIconID()]);
         holder.username.setText(momentMsgList.get(position).getUserId());
+
+
         holder.moment.setText(momentMsgList.get(position).getMoment());
 //        holder.good.setImageResource(momentMsgList.get(position).getGood());
         holder.good.setImageResource(R.drawable.ungood);
@@ -46,7 +49,7 @@ public class AdapterMomentItem extends RecyclerView.Adapter<AdapterMomentItem.Ba
         return (momentMsgList == null ? 0 : momentMsgList.size());
     }
 
-    class BaseViewHolder extends RecyclerView.ViewHolder{
+    class BaseViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imageView;
         private TextView username;
@@ -70,7 +73,7 @@ public class AdapterMomentItem extends RecyclerView.Adapter<AdapterMomentItem.Ba
                     for (MomentMsg momentMsg : MomentMsg.momentMsgList) {
                         if (momentMsg.getMoment().equals(moment.getText().toString())) {
                             int goods = Integer.parseInt(good_num.getText().toString());
-                            goods = isgood? goods - 1: goods + 1;
+                            goods = isgood ? goods - 1 : goods + 1;
                             momentMsg.setGood(goods);
                             String str_goods = String.valueOf(goods);
                             good_num.setText(str_goods);

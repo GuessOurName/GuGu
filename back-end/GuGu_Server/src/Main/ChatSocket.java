@@ -22,6 +22,7 @@ public class ChatSocket extends Thread {
     private String userId;
     private Socket socket;
     private String message = null;
+    // 字符缓冲输入流
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private Connection connection = DBManager.getDBManager().getConnection();
@@ -153,6 +154,7 @@ public class ChatSocket extends Thread {
     private void dealAddGroup(String msg) {
         String sqlSearchGroupById = "SELECT * FROM Groups WHERE GroupId=" + msg + ";\n";
         try {
+            // Statement 的主要是用于执行静态 SQL 语句并返回它所生成结果的对象
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlSearchGroupById);
             if (resultSet.next()) {
@@ -200,7 +202,7 @@ public class ChatSocket extends Thread {
 
     private void dealGetMoment() {
         List<MomentMsg> momentMsgList = new ArrayList<>();
-        String sqlgetMoment = "SELECT distinct  Friends.UserId,Likes,Msg,MomentTime FROM Friends,Moments WHERE (Friends.UserId=" + userId + " and Friends.FriendId=Moments.UserId and Moments.UserId = Friends.FriendId) or (Moments.UserId = "+userId+" and Moments.UserId = Friends.UserId);\n";
+        String sqlgetMoment = "SELECT distinct Moments.UserId,Likes,Msg,MomentTime FROM Friends,Moments WHERE  Friends.UserId="+userId+" and (Friends.FriendId=Moments.UserId or Moments.UserId="+userId+");\n";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlgetMoment);
@@ -209,6 +211,7 @@ public class ChatSocket extends Thread {
                 momentMsg.setGood(resultSet.getInt("Likes"));
                 momentMsg.setMoment(resultSet.getString("Msg"));
                 momentMsg.setUserId(String.valueOf(resultSet.getInt("UserId")));
+
                 momentMsg.setTime(resultSet.getString("MomentTime"));
                 momentMsgList.add(momentMsg);
             }
@@ -350,11 +353,6 @@ public class ChatSocket extends Thread {
 //                userItemMsg.setGroupUserList(userList);
                 userItemMsgList.add(userItemMsg);
             }
-//            String asd = gson.toJson(userItemMsgList);
-//            System.out.println(asd);
-//            GroupList g = gson.fromJson(msg,GroupList.class);
-//            List<UserItemMsg> gg = gson.fromJson(asd, new TypeToken<List<UserItemMsg>>() {
-//            }.getType());
             String sqlFriends = "SELECT FriendId FROM Friends WHERE UserId=" + userId + ";\n";
             resultSet = statement.executeQuery(sqlFriends);
             while (resultSet.next()) {

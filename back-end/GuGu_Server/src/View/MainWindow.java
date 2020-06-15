@@ -68,9 +68,6 @@ public class MainWindow extends JFrame {
         return mainWindow;
     }
 
-    /**
-     * Create the frame.
-     */
     public MainWindow() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
